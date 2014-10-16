@@ -1,0 +1,41 @@
+users
+	id
+	pseudo
+	firstname
+	lastname
+	score
+	sexe
+	birthday
+	country --> lien vers tables country
+	langues
+	work
+	sites web
+	lien_photo
+	password
+	hash
+	token
+	validCount
+	actif
+	dateCreated
+	dateModified
+
+questions
+	id
+	users_id
+	questions
+	vote
+	tags
+	dateCreated
+	dateModified
+
+answers
+	id
+	users_id
+	questions_id
+	answers_id
+	comment
+	top (bool)
+	dateCreated
+	dateModified
+	question (O/N)
+	vote
