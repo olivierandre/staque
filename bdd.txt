@@ -1,13 +1,17 @@
+Création d’un compte puis envoi d’un mail de confirmation.
+On arrive sur l’écran ou l’on valide son pseudo (display name) + possibilité d’ajouter sa photo
+Guide d’utilisation —> http://stackoverflow.com/tour
+On arrive avec 1 point de réputation
+
 users
 	id
 	pseudo
 	firstname
 	lastname
-	score
-	sexe
+	!!score!!
 	birthday
-	country --> lien vers tables country
-	langues
+	country --> lien vers tables tech_country
+	langues —> Technique ou parlé ?
 	work
 	sites web
 	lien_photo
@@ -21,21 +25,51 @@ users
 
 questions
 	id
-	users_id
-	questions
-	vote
+	id_users
+	question
 	tags
 	dateCreated
 	dateModified
 
-answers
+tags_questions
+	id_questions
+	tag_name
+
+answers —> Principe d’une réponse à une réponse : on répond à la réponse quand on a assez de réputation puis on peut laisser un commentaire sur une réponse. On ne pas pas répondre à une réponse d’une réponse.
 	id
-	users_id
-	questions_id
-	answers_id
-	comment
-	top (bool)
+	id_users
+	id_questions
+	id_answer_respond —> null possible
+	answer
+	resolve_question —> bool (only one by question)
 	dateCreated
 	dateModified
-	question (O/N)
-	vote
+
+comment_answers —> A voir …
+	id
+	id_users
+	id_answer
+	dateCreated
+	dateModified
+
+note	
+	id
+	id_note
+	id_answer
+	id_user —> Celui qui a noté. 1 vote par personne
+
+tech_note
+	id
+	value
+	dateCreated
+	dateModified
+
+tech_countries
+	sql file
+
+tech_tags
+	id
+	name
+	dateCreated
+	dateModified
+	
