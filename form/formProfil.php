@@ -33,10 +33,12 @@
 
 	$birthday = strtotime($profil['birthday']);
 	
-	if( $birthday == 0) {
+	if( $birthday <= 0) {
 		$birthday = "";
 	} else {
 		$birthday = date("d/m/Y", $birthday);
+		$age = date('Y') - date('Y', strtotime($birthday));
+		echo $age;
 	}
 
 	$job = $profil['job'];
@@ -51,11 +53,23 @@
 
 	$countries = getAllCountries();
 	$dateCreation = dateFrWithHour($profil['date_created']);
-	
+	$error = "PROFIL";
+
+	if(!empty($_SESSION['errorProfil'])) {
+		$error = $_SESSION['errorProfil'];
+		$_SESSION['errorProfil'] = "";
+	}
+		
 ?>
 
+<div id="titreForm">
+	<h1 class="errorForm"><?= $error ?></h1>
+</div>
+
 <div id="formulaireLog">
-	<form method="POST" action="index.php?page=verifProfil">
+
+	<form id="formProfil" method="POST" action="index.php?page=verifProfil">
+
 		<label for="pseudo">Pseudo</label>
 		<input type="text" id="pseudo" name="pseudo" value="<?= ucfirst($profil['pseudo']) ?>">
 
@@ -95,19 +109,9 @@
 		<label for="web">Site web</label>
 		<input type="text" id="web" name="web" value="<?=$web ?>" placeholder="N'ajoutez pas le 'http://'">
 
-		
-
-		<p class="errorForm">Date création : <?= $dateCreation ?></p>
+		<p class="date_creat">Date création : <?= $dateCreation ?></p>
 
 		<input type="submit" value="Update profil">
-
-		<?php 
-		if(!empty($_SESSION['errorProfil'])) : 
-			$error = $_SESSION['errorProfil'];
-			$_SESSION['errorProfil'] = "";
-		?>
-		<p class="errorForm"><?= $error ?></p>
-		<?php endif;?>
 	</form>
 	
 </div>

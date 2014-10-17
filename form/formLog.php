@@ -1,5 +1,25 @@
+<?php 
+
+	if(isLog()) {
+		header(PAGE_ACCUEIL);
+		die();	
+	}
+
+	$error = "CONNEXION";
+
+	if(!empty($_SESSION['errorConnexion'])) {
+		$error = $_SESSION['errorConnexion'];
+		$_SESSION['errorConnexion'] = "";
+	}
+		
+?>
+
+<div id="titreForm">
+	<h1 class="errorForm"><?= $error ?></h1>
+</div>
+
 <div id="formulaireLog">
-		<form method="POST" action="index.php?page=verifLog">
+		<form id="formLog" method="POST" action="index.php?page=verifLog">
 			<label for="pseudo">Pseudo ou email</label>
 			<input type="text" id="pseudo" name="pseudo">
 
@@ -10,13 +30,6 @@
 
 			<input type="submit" value="Se connecter !">
 
-			<?php 
-			if(!empty($_SESSION['errorConnexion'])) : 
-				$error = $_SESSION['errorConnexion'];
-				$_SESSION['errorConnexion'] = "";
-			?>
-			<p class="errorForm"><?= $error ?></p>
-			<?php endif;?>
 		</form>
 		<a class="lost" href="index.php?page=lost">Mot de passe perdu ?</a>
 	</div>

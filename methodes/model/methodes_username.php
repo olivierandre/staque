@@ -171,6 +171,21 @@
 		return $user;
 	}
 
+	function getPseudo($id) {
+		$dbh = connectDBH();
+		$sql = "SELECT pseudo FROM users
+				WHERE id = :id";
+		
+		$stmt = $dbh->prepare($sql);
+		$stmt->bindValue(":id", $id);
+
+		$stmt->execute();
+		$pseudo = $stmt->fetchColumn();
+
+		closeDBH($dbh);
+		return $pseudo;
+	}
+
 	function findMail($username) {
 		$dbh = connectDBH();
 		$sql = "SELECT email FROM usercontrol
@@ -193,7 +208,7 @@
 
 	function verifMailToken($email, $token) {
 		$dbh = connectDBH();
-		$sql = "SELECT COUNT(*) AS find FROM usercontrol
+		$sql = "SELECT COUNT(*) AS find FROM users
 				WHERE token = :token
 				AND email = :email";
 

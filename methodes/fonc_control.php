@@ -5,7 +5,7 @@
 	*/
 
 	function home() {
-		showPage("html", "staque");
+		showPage("html", "staque", "Bienvenue sur le site 'STAQUE'");
 	}
 
 	function profil() {
@@ -17,6 +17,7 @@
 	*/
 
 	function connexion() {
+
 		showPage("log", "page de CONNEXION");
 	}
 
@@ -71,7 +72,7 @@
 	/*
 	*	Affiche les pages
 	*/  
-	function showPage ($dir, $title){
+	function showPage ($dir, $title, $description = "Description de la page"){
 		$title = ucfirst($title);
 		global $page;
 		global $pageLogRegister;
