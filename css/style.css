@@ -8,14 +8,23 @@
 /*
 /**************************************************/
 h1, h2, h3, h4, h5, h6,
-span, input, p, a, button, label {
+span, input, p, a, button, label, select {
 	font-family: Raleway, Calibry
 }
 
-h1, h2, h3, h4, h5, h6 {
+h1, h2, h3, h4, h5, h6, select, a {
 	text-transform: uppercase;
 }
 
+a {
+	text-decoration: none;
+	color: black;
+	cursor: pointer;
+}
+
+input[type=submit] {
+	cursor: pointer;
+}
 
 /*************************************************/
 /*
@@ -48,7 +57,7 @@ h1, h2, h3, h4, h5, h6 {
 
 #log {
 	float: right;
-	margin-right: 25%;
+	margin-right: 15%;
 	padding: 20px 0;
 	text-align: center;
 	text-transform: uppercase;
@@ -59,16 +68,59 @@ h1, h2, h3, h4, h5, h6 {
 	width: 150px;
 	color: white;
 	text-decoration: none;
-	padding: 10px 30px;
+	padding: 10px 10px;
 	background-color: rgba(113, 212, 254, 0.7);
 	margin-right: 20px;
 	transition: background-color .3s;
+	font-size: 14px;
 }
 
 #log a:hover {
 	background-color: rgba(113, 212, 254, 1);
 }
 
+/*************************************************/
+/*
+/*
+/*			Accueil
+/*
+/*
+/**************************************************/
+#question, #messageConnexion {
+	clear: both;
+	width: 100%;
+	height : 20%;
+	margin-right: 30%;
+	margin-top: 50px;
+	text-align: center;
+}
+
+#messageConnexion {
+	display: none;
+}
+
+#question a, #messageConnexion a {
+	margin: auto;
+	display: block;
+	width: 25%;
+	padding: 20px 30px;
+	background-color: rgba(43, 169, 205, 0.5);
+	color: white;
+	transition: background-color .3s;
+}
+
+#question a:hover {
+	background-color: rgba(43, 169, 205, 1);
+}
+
+#messageConnexion a {
+	background-color: rgba(200, 78, 215, 0.5);
+	margin-bottom: 20px;
+}
+
+#messageConnexion a:hover {
+	background-color: rgba(200, 78, 215, 1);
+}
 
 /*************************************************/
 /*
@@ -79,7 +131,7 @@ h1, h2, h3, h4, h5, h6 {
 /**************************************************/
 
 
-#register, #formulaireLog {
+#register, #formulaireLog, #tiny {
 	width: 800px;
 	margin: auto;
 	min-height: 100px;
@@ -119,7 +171,8 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 #register input[type=submit],
-#formulaireLog input[type=submit] {
+#formulaireLog input[type=submit], 
+#tiny input[type=submit] {
 	clear: both;
 	padding: 10px 30px;
 	background-color: rgba(113, 212, 254, 0.7);
@@ -135,9 +188,9 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 #register input[type=submit]:hover,
-#formulaireLog input[type=submit]:hover {
+#formulaireLog input[type=submit]:hover,
+#tiny input[type=submit]:hover {
 	background-color: rgba(113, 212, 254, 1);
-	cursor: pointer;
 }
 
 #formulaireLog .remember {
@@ -180,4 +233,10 @@ h1, h2, h3, h4, h5, h6 {
 #formulaireLog a:hover {
 	background-color: rgba(10, 213, 153, 1);
 	opacity: 1;
+}
+
+#formulaireLog select {
+	width: 430px;
+	margin-top: 20px;
+	padding: 10px;
 }

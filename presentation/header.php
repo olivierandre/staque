@@ -7,6 +7,7 @@
 		<meta name="description" content="">
 		<link href='http://fonts.googleapis.com/css?family=Raleway:300, 400, 700' rel='stylesheet' type='text/css'>
 		<link rel="stylesheet" href="css/style.css" /> 
-		<link rel="stylesheet" href="css/style_rd.css" />
+		<link rel="stylesheet" href="js/jquery-ui/jquery-ui.min.css" />
+		<link rel="stylesheet" href="js/prism/prism.css" />
 	</head>
 	<body>

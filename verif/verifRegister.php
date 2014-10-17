@@ -8,17 +8,20 @@
 		$password = $_POST['password'];
 		$passwordAgain = $_POST['passwordAgain'];
 
+		$_POST['password'] ="";
+		$_POST['passwordAgain'] = "";
+
 		$_SESSION['infoRegister'] = $_POST;
 
-		/*if(verifUsernameMail($username, null)) {
-			$_SESSION['errorLog'] = "Username déjà utilisé";
+		if(verifUsernameMail($pseudo)) {
+			$_SESSION['errorLog'] = "Pseudo déjà utilisé";
 			header($loc);
 			die();
-		} else if (verifUsernameMail(null, $email)) {
-			$_SESSION['errorLog'] = "Mot de passe déjà existant";
+		} else if (verifUsernameMail($email)) {
+			$_SESSION['errorLog'] = "Adresse mail déjà existant";
 			header($loc);
 			die();
-		}*/
+		}
 
 		if(empty($pseudo)) {
 			$_SESSION['errorLog'] = "Veuillez saisir un pseudo";
@@ -42,25 +45,26 @@
 				$passwordCrypt = hash('sha512', SALT_PREFIX.$password.$salt);
 			}
 				
-			$count = createUser(strtolower($username), strtolower($email), $country, $passwordCrypt, $salt, $token);
+			$id = createUser(strtolower($pseudo), strtolower($email), $passwordCrypt, $salt, $token);
+
 		}
 
-		if($count) {
+		if($id) {
 			$_SESSION['log'] = TRUE;
-			$_SESSION['username'] = $username;
+			$_SESSION['id'] = $id;
+			$_SESSION['pseudo'] = $pseudo;
+			$_SESSION['infoRegister'] = "";
 			header("Location: http://localhost/staque/index.php?page=profil");
+			die();
 		} else {
 			$_SESSION['errorLog'] = "La création de vos identifiants a échoué";
-			header($loc);
-			
 		}		
 
 	} else {
 		$_SESSION['errorLog'] = "Veuillez vous enregistrer ou vous connecter pour accéder à votre profil";
-		header($loc);
-		
 	}
 
+	header($loc);
 	die();
 
 ?>

@@ -43,10 +43,4 @@
 	function getSaltToken() {
 		return randomSalt(getASCII());
 	}
-
-	
-
-	echo getSaltToken();
-	
-
 ?>

@@ -1,7 +1,7 @@
 <div id="formulaireLog">
-		<form method="POST" action="verifLog.php">
-			<label for="username">Username ou mail</label>
-			<input type="text" id="username" name="username">
+		<form method="POST" action="index.php?page=verifLog">
+			<label for="pseudo">Pseudo ou email</label>
+			<input type="text" id="pseudo" name="pseudo">
 
 			<label for="password">Password</label>
 			<input type="password" id="password" name="password">
@@ -18,5 +18,5 @@
 			<p class="errorForm"><?= $error ?></p>
 			<?php endif;?>
 		</form>
-		<a class="lost" href="../log/lost.php">Mot de passe perdu ?</a>
+		<a class="lost" href="index.php?page=lost">Mot de passe perdu ?</a>
 	</div>

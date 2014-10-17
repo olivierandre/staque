@@ -1,4 +1,4 @@
-Création d’un compte puis envoi d’un mail de confirmation.
+﻿Création d’un compte puis envoi d’un mail de confirmation.
 On arrive sur l’écran ou l’on valide son pseudo (display name) + possibilité d’ajouter sa photo
 Guide d’utilisation —> http://stackoverflow.com/tour
 On arrive avec 1 point de réputation
@@ -9,14 +9,15 @@ users
 	firstname
 	lastname
 	!!score!!
+	email
 	birthday
-	country --> lien vers tables tech_country
+	id_country --> lien vers tables tech_country
 	langues —> Technique ou parlé ?
 	work
-	sites web
+	web
 	lien_photo
 	password
-	hash
+	salt
 	token
 	validCount
 	actif
@@ -57,6 +58,11 @@ note
 	id_note
 	id_answer
 	id_user —> Celui qui a noté. 1 vote par personne
+
+language
+	id
+	id_user
+	name_language
 
 tech_note
 	id
