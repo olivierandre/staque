@@ -1,15 +1,54 @@
 <?php
 	include("presentation/header.php");
 	include("presentation/top.php");
+
+	$tags = getTags();
+	$id_users = $_SESSION['id'];
+
+	$pseudo = $_SESSION['pseudo'];
+	$dateCreated = getDateCreated($id_users);
+	$nbQuestions = numberOfQuestionsUser($id_users);
+	$nbAnswers = 0;
 ?>
 
-<form id="tiny" method="post" action="index.php?page=verifQuestion">
-    <textarea name="content"></textarea>
-    <input type="submit">
-</form>
+<section id="sectionQuestion">
+	<div id="divFormTiny">
+		<form id="tiny" method="post" action="index.php?page=verifQuestion">
+			<label for="titreQuestion">Titre de la question</label>
+			<input type="text" name="titreQuestion" id="titreQuestion" placeholder="What's your programming question? Be specific.">
+
+			<label for="tagsQuestion">Tags</label>
+			<div id="search_bar"></div>
+
+			<div class="textarea">
+		    	<textarea name="textQuestion"></textarea>
+		    </div>
+
+		    <div id="previewSubmitButton">
+			    <button id="previewQuestion">preview</button>
+			    <input id="submitQuestion" type="submit">
+			</div>
+		</form>
+	</div>
+
+	<div id="infoProfil">
+		<div class="imgProfil100">
+			<img src="img/figure100/11102014_6044.jpg">
+		<p class="pseudo"><?= $pseudo ?></p>
+		<p class="pseudoScore">100</p>
+		<p class='infoProfil'>Inscrit le <?= dateFr($dateCreated) ?></p>
+		<p class='infoProfil'>A posé <?= $nbQuestions ?> question(s)</p>
+		<p class='infoProfil'>A répondu à <?= $nbAnswers ?> question(s)<p>
+		</div>
+	</div>
+
+	<div id="seePreview">
+	</div>
+
+</section>
 
 
 <?php
-	echo '<script type="text/javascript" src="js/tinymce/tinymce.min.js"></script>';
+	
 	include("presentation/footer.php");
 ?>

@@ -6,8 +6,9 @@ app = {
 		click.init();
 		date.init();
 		buzz.init();
-		//tiny.init();
+		tiny.init();
 		affiche.init();
+		autocomplete.init();	
 	}
 }
 
@@ -20,6 +21,8 @@ click = {
 		_this.clickBoutonQuestion();
 		_this.clickLogProfil();
 		_this.clickUpdateProfil();
+		_this.clickPreviewButton();
+		_this.focusInputQuestion();
 
 	},
 
@@ -43,6 +46,19 @@ click = {
 			update.ajaxUpdateProfil($(this));
 			return false;
 		})
+	},
+
+	clickPreviewButton: function() {
+		$("#previewQuestion").on("click", function() {
+			affiche.previewResultTextarea();
+			return false;
+		})
+	},
+
+	focusInputQuestion: function() {
+		$("#tiny").on("focusout", function() {
+			affiche.afficheTextarea()
+		})
 	}
 }
 
@@ -61,19 +77,81 @@ affiche = {
 			.animate({
 				opacity: 0
 			})
+	},
+
+	afficheTextarea: function() {
+		_this = this;
+		_this.inputTiny = $("#tiny input");
+
+		_this.titleInput = _this.inputTiny.first().val().split(" ").join("").length;
+		_this.tagInput = widget.getValue().length;
+		
+		if(_this.titleInput > 0 && _this.tagInput > 0) {
+			$(".textarea, #previewSubmitButton").animate({
+				opacity: 1
+			})
+		} else {
+			$(".textarea, #previewSubmitButton").animate({
+				opacity: 0
+			})
 		}
+	},
+
+	previewResultTextarea: function() {
+		var	val = tinyMCE.activeEditor.getContent();
+		_this.seePreview = $("#seePreview");
+
+		_this.seePreview.empty();
+
+		$("<p>").text("Visualisation de votre message").appendTo(_this.seePreview);
+		$("<div>").attr("id", "seeTitre").appendTo(_this.seePreview);
+		$("<div>").attr("id", "seeTags").appendTo(_this.seePreview);
+		$("<div>").attr("id", "seeDescription").appendTo(_this.seePreview);
+
+		$("<h2>").text( $("#titreQuestion").val() ).appendTo("#seeTitre");
+		$("<p>").text( autocomplete.getValue(widget.getValue()) ).appendTo("#seeTags");
+		$("#seeDescription").html(val);
+
+		$("#seePreview").fadeIn({
+			complete : function() {
+				$("#submitQuestion").animate({
+					opacity: 1
+				})
+				SyntaxHighlighter.highlight();
+			}
+		});		
+	}
+}
+
+autocomplete = {
+	init: function() {
+		setInterval(widget.blur, 5000);
+	},
+
+	getValue: function(val) {
+		test = val;
+		texte = "";
+
+		len = test.length;
+
+		for(i=0; i < len; i++) {
+			texte += test[i][0].value + ', ';
+		}
+
+		return texte.slice(0, texte.length - 2)
+	}
 }
 
 tiny = {
 	init: function() {
 		tinymce.init({
 		    selector: "textarea",
+		    menubar: false,
 		    plugins: [
-		        "advlist autolink lists link image charmap print preview anchor",
-		        "searchreplace visualblocks code fullscreen",
-		        "insertdatetime media table contextmenu paste"
+		        "preview sh4tinymce"
 		    ],
-		    toolbar: "insertfile undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image"
+		    toolbar: "undo redo | sh4tinymce | code",
+		    height : 300
 		});
 	}
 }

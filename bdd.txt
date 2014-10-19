@@ -58,6 +58,8 @@ note
 	id_note
 	id_answer
 	id_user —> Celui qui a noté. 1 vote par personne
+	dateCreated
+	dateModified
 
 language
 	id

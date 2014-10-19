@@ -6,11 +6,11 @@
 		include("../methodes/logout.php");
 	}*/
 
-	include("methodes/model/include_bdd.php");
-	include("methodes/createSaltToken.php");
-	include("methodes/fonc_control.php");
-	include("methodes/constant.php");
-	include("methodes/dateFr.php");
+	include("functions/model/include_bdd.php");
+	include("functions/createSaltToken.php");
+	include("functions/fonc_control.php");
+	include("functions/constant.php");
+	include("functions/dateFr.php");
 
 	$page = "home";
 	$pageLogRegister = false;

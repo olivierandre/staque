@@ -54,6 +54,12 @@
 			$_SESSION['id'] = $id;
 			$_SESSION['pseudo'] = $pseudo;
 			$_SESSION['infoRegister'] = "";
+
+			// MAJ_Score
+
+			
+
+			
 			header("Location: http://localhost/staque/index.php?page=profil");
 			die();
 		} else {
