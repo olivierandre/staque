@@ -2,13 +2,19 @@
 -- version 4.1.12
 -- http://www.phpmyadmin.net
 --
--- Client :  localhost:8889
--- Généré le :  Dim 19 Octobre 2014 à 22:05
--- Version du serveur :  5.5.34
--- Version de PHP :  5.5.10
+-- Client :  127.0.0.1
+-- Généré le :  Lun 20 Octobre 2014 à 17:25
+-- Version du serveur :  5.6.16
+-- Version de PHP :  5.5.11
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
+
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8 */;
 
 --
 -- Base de données :  `staque`
@@ -17,17 +23,53 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
--- Structure de la table `questions`
+-- Structure de la table `answers`
 --
 
-CREATE TABLE `questions` (
+CREATE TABLE IF NOT EXISTS `answers` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `id_users` int(11) NOT NULL,
-  `question` text NOT NULL,
+  `id_user` int(11) NOT NULL,
+  `id_question` int(11) NOT NULL,
+  `answer` text NOT NULL,
+  `resolve` tinyint(1) NOT NULL,
   `date_created` datetime NOT NULL,
   `date_modified` datetime NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=2 ;
+
+--
+-- Contenu de la table `answers`
+--
+
+INSERT INTO `answers` (`id`, `id_user`, `id_question`, `answer`, `resolve`, `date_created`, `date_modified`) VALUES
+(1, 6, 6, '<p>La question est pas terrible ...</p>', 0, '2014-10-20 17:09:24', '2014-10-20 17:09:24');
+
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `questions`
+--
+
+CREATE TABLE IF NOT EXISTS `questions` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `id_users` int(11) NOT NULL,
+  `titre` varchar(70) NOT NULL,
+  `question` text NOT NULL,
+  `id_note` int(11) NOT NULL,
+  `view` int(11) NOT NULL,
+  `date_created` datetime NOT NULL,
+  `date_modified` datetime NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=7 ;
+
+--
+-- Contenu de la table `questions`
+--
+
+INSERT INTO `questions` (`id`, `id_users`, `titre`, `question`, `id_note`, `view`, `date_created`, `date_modified`) VALUES
+(2, 3, 'Question 1', '<p>Ceci est une question test</p>\r\n<pre class="brush:js;auto-links:false;toolbar:false" contenteditable="false">&lt;script&gt;\r\n    alert("coucou");\r\n&lt;/script&gt;</pre>\r\n<p>Merci !</p>', 2, 0, '2014-10-20 11:28:30', '2014-10-20 11:28:30'),
+(3, 3, 'Problème avec Java', '<pre class="brush:java;auto-links:false;toolbar:false" contenteditable="false">toto = new String("toto");</pre>\r\n<p>Ce code ne fonctionne pas ...</p>', 2, 2, '2014-10-20 11:34:55', '2014-10-20 11:34:55'),
+(6, 3, 'Nouvelle question PHP', '<pre class="brush:php;auto-links:false;toolbar:false" contenteditable="false">function coucou($texte) {\r\n    return echo $texte;\r\n}</pre>\r\n<p>Ca marche pas &ccedil;a !</p>', 2, 101, '2014-10-20 11:37:32', '2014-10-20 11:37:32');
 
 -- --------------------------------------------------------
 
@@ -35,10 +77,23 @@ CREATE TABLE `questions` (
 -- Structure de la table `questions_tags`
 --
 
-CREATE TABLE `questions_tags` (
+CREATE TABLE IF NOT EXISTS `questions_tags` (
   `id_question` int(11) NOT NULL,
   `id_tag` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Contenu de la table `questions_tags`
+--
+
+INSERT INTO `questions_tags` (`id_question`, `id_tag`) VALUES
+(2, 1),
+(2, 2),
+(3, 3),
+(4, 3),
+(5, 3),
+(6, 1),
+(0, 0);
 
 -- --------------------------------------------------------
 
@@ -46,7 +101,7 @@ CREATE TABLE `questions_tags` (
 -- Structure de la table `tech_countries`
 --
 
-CREATE TABLE `tech_countries` (
+CREATE TABLE IF NOT EXISTS `tech_countries` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `country_code` varchar(2) NOT NULL DEFAULT '',
   `country_name` varchar(100) NOT NULL DEFAULT '',
@@ -307,7 +362,7 @@ INSERT INTO `tech_countries` (`id`, `country_code`, `country_name`) VALUES
 -- Structure de la table `tech_score`
 --
 
-CREATE TABLE `tech_score` (
+CREATE TABLE IF NOT EXISTS `tech_score` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(20) NOT NULL,
   `description` varchar(50) NOT NULL,
@@ -336,7 +391,7 @@ INSERT INTO `tech_score` (`id`, `name`, `description`, `score`, `date_created`, 
 -- Structure de la table `tech_tags`
 --
 
-CREATE TABLE `tech_tags` (
+CREATE TABLE IF NOT EXISTS `tech_tags` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(50) NOT NULL,
   `date_created` datetime NOT NULL,
@@ -360,7 +415,7 @@ INSERT INTO `tech_tags` (`id`, `name`, `date_created`, `date_modified`) VALUES
 -- Structure de la table `users`
 --
 
-CREATE TABLE `users` (
+CREATE TABLE IF NOT EXISTS `users` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `pseudo` varchar(50) NOT NULL,
   `firstname` varchar(50) NOT NULL,
@@ -377,6 +432,7 @@ CREATE TABLE `users` (
   `token` varchar(50) NOT NULL,
   `valid_count` tinyint(1) NOT NULL,
   `actif` tinyint(1) NOT NULL,
+  `id_note` int(11) NOT NULL DEFAULT '1',
   `date_created` datetime NOT NULL,
   `date_modified` datetime NOT NULL,
   PRIMARY KEY (`id`),
@@ -387,8 +443,12 @@ CREATE TABLE `users` (
 -- Contenu de la table `users`
 --
 
-INSERT INTO `users` (`id`, `pseudo`, `firstname`, `lastname`, `email`, `birthday`, `id_country`, `id_language`, `job`, `web`, `lien_photo`, `password`, `salt`, `token`, `valid_count`, `actif`, `date_created`, `date_modified`) VALUES
-(3, 'Viggo', 'René', 'Le Loulou', 'Olivier.andre77@gmail.com', '1937-08-18 00:00:00', 'FR', 0, 'Développeur PHP', '', '', '669d241a469fcec1022b0b0e8b5ab5e04d2c0412cacb4c784eb69c5fc54b01f54b564a32bfebdce46ddac4558291303a451384a17acaa40c7f3154e8f4e8a219', '2AbQ*kugHhnMaxoVOIJoeqB2jbf6eh6dHSqdYWKLkUxTRyivSx', 'YRG5TMBXvOrGFmWlEtcFYSMQ1RANoRBW*jKBzHEHzJH5evVbq*', 0, 0, '2014-10-17 10:09:34', '2014-10-17 23:31:40'),
-(6, 'roger', '', '', 'roger.andre77@gmail.com', '0000-00-00 00:00:00', '0', 0, '', '0', '', '399d3c2cb2817d9ad877646dc9e32bed1bcbe52b846d2251fe3df4701b5c319572730cb495d071b93e023e6cc8135e47f6857b12df2f688c324aebf318dd31e5', 'cjudG61wNtZl17p.IOYzPd.H7Svijhtk6*MXqfh91zH0meywiB', 'Nt0MoQ.UGcj1l36MCOVo4UQbBVaCd.Z*3J65YbUhpF.Fefp48s', 0, 0, '2014-10-17 10:22:14', '2014-10-17 10:22:14'),
-(7, 'jean', '', '', 'jean.olivier@gmail.com', '0000-00-00 00:00:00', '0', 0, '', '0', '', 'fd2ba991a317e20f1bad874fb478b2d7ee089b4324db8085ee5c0fa05bd68b7d14834d6753af094602289284a357953cfbec3e74d843c018c37ccac80439a835', 'iDQRxs2UnzdwFRGwrMLjsjy1PgCMsvyKG4OFjJl.wEH19lzuAP', 'ToMl1Qay.dW2CZZjMFb0ZrzGSQ39blQ9MIf2udrWrICI2VF4tw', 0, 0, '2014-10-17 10:40:44', '2014-10-17 10:40:44'),
-(8, 'Antonio25', '', 'Barney', 'Antonio.andre@gmail.com', '2013-05-02 00:00:00', 'NO', 0, 'Testeur', 'www.test.fr', '', '64ce2dd7907e2a568b6110a45fa7866ab6cc8eb4fe199b18588ea9dc1d384994eafb845dcf1a492ae77bb50fa58e3000dfb955d2d82e27bd3aec85bff763a998', 'tBQLobKl5sJN5mutZShGO8gDwAxkU6bjiZ1ESIMI8TMKvKyHzB', 'bieFwGdP5nKC*d431yR1sXHx5s9dM6.4q7yAKomzJ2sdDMqyhe', 0, 0, '2014-10-17 11:53:14', '2014-10-17 14:30:47');
+INSERT INTO `users` (`id`, `pseudo`, `firstname`, `lastname`, `email`, `birthday`, `id_country`, `id_language`, `job`, `web`, `lien_photo`, `password`, `salt`, `token`, `valid_count`, `actif`, `id_note`, `date_created`, `date_modified`) VALUES
+(3, 'Viggo', 'René', 'Le Loulou', 'Olivier.andre77@gmail.com', '1937-08-18 00:00:00', 'FR', 0, 'Développeur PHP', '', '', '669d241a469fcec1022b0b0e8b5ab5e04d2c0412cacb4c784eb69c5fc54b01f54b564a32bfebdce46ddac4558291303a451384a17acaa40c7f3154e8f4e8a219', '2AbQ*kugHhnMaxoVOIJoeqB2jbf6eh6dHSqdYWKLkUxTRyivSx', 'YRG5TMBXvOrGFmWlEtcFYSMQ1RANoRBW*jKBzHEHzJH5evVbq*', 0, 0, 1, '2014-10-17 10:09:34', '2014-10-17 23:31:40'),
+(6, 'Roger', 'Roger', '', 'Roger.andre77@gmail.com', '1970-01-01 01:00:00', '', 0, '', '', '', '399d3c2cb2817d9ad877646dc9e32bed1bcbe52b846d2251fe3df4701b5c319572730cb495d071b93e023e6cc8135e47f6857b12df2f688c324aebf318dd31e5', 'cjudG61wNtZl17p.IOYzPd.H7Svijhtk6*MXqfh91zH0meywiB', 'Nt0MoQ.UGcj1l36MCOVo4UQbBVaCd.Z*3J65YbUhpF.Fefp48s', 0, 0, 1, '2014-10-17 10:22:14', '2014-10-20 14:52:35'),
+(7, 'jean', '', '', 'jean.olivier@gmail.com', '0000-00-00 00:00:00', '0', 0, '', '0', '', 'fd2ba991a317e20f1bad874fb478b2d7ee089b4324db8085ee5c0fa05bd68b7d14834d6753af094602289284a357953cfbec3e74d843c018c37ccac80439a835', 'iDQRxs2UnzdwFRGwrMLjsjy1PgCMsvyKG4OFjJl.wEH19lzuAP', 'ToMl1Qay.dW2CZZjMFb0ZrzGSQ39blQ9MIf2udrWrICI2VF4tw', 0, 0, 1, '2014-10-17 10:40:44', '2014-10-17 10:40:44'),
+(8, 'Antonio25', '', 'Barney', 'Antonio.andre@gmail.com', '2013-05-02 00:00:00', 'NO', 0, 'Testeur', 'www.test.fr', '', '64ce2dd7907e2a568b6110a45fa7866ab6cc8eb4fe199b18588ea9dc1d384994eafb845dcf1a492ae77bb50fa58e3000dfb955d2d82e27bd3aec85bff763a998', 'tBQLobKl5sJN5mutZShGO8gDwAxkU6bjiZ1ESIMI8TMKvKyHzB', 'bieFwGdP5nKC*d431yR1sXHx5s9dM6.4q7yAKomzJ2sdDMqyhe', 0, 0, 1, '2014-10-17 11:53:14', '2014-10-17 14:30:47');
+
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
