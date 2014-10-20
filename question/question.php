@@ -9,6 +9,7 @@
 	$dateCreated = getDateCreated($id_users);
 	$nbQuestions = numberOfQuestionsUser($id_users);
 	$nbAnswers = 0;
+	$score = getScoreInscription($id_users) + getScoreAskQuestion($id_users);
 ?>
 
 <section id="sectionQuestion">
@@ -19,6 +20,7 @@
 
 			<label for="tagsQuestion">Tags</label>
 			<div id="search_bar"></div>
+			<input type="hidden" id ="tagsQuestion" name="tagsQuestion" value="">
 
 			<div class="textarea">
 		    	<textarea name="textQuestion"></textarea>
@@ -35,7 +37,7 @@
 		<div class="imgProfil100">
 			<img src="img/figure100/11102014_6044.jpg">
 		<p class="pseudo"><?= $pseudo ?></p>
-		<p class="pseudoScore">100</p>
+		<p class="pseudoScore"><?= $score ?></p>
 		<p class='infoProfil'>Inscrit le <?= dateFr($dateCreated) ?></p>
 		<p class='infoProfil'>A posé <?= $nbQuestions ?> question(s)</p>
 		<p class='infoProfil'>A répondu à <?= $nbAnswers ?> question(s)<p>

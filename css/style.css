@@ -9,7 +9,7 @@
 /**************************************************/
 h1, h2, h3, h4, h5, h6,
 span, input, p, a, button, label, select,
-figcaption, textarea {
+figcaption, textarea, ul, li {
 	font-family: Raleway, Calibry
 }
 
@@ -35,6 +35,12 @@ input[type=submit], button, a {
 
 .clearfix {
 	clear: both;
+}
+
+.button {
+	padding: 10px 30px;
+	border: 0;
+	color: white;
 }
 
 /*************************************************/
@@ -151,7 +157,7 @@ input[type=submit], button, a {
 }
 
 
-#register, #formulaireLog, #tiny {
+#register, #formulaireLog, #tiny, #tinyAnswer {
 	width: 800px;
 	margin: auto;
 	min-height: 100px;
@@ -206,7 +212,8 @@ input[type=submit], button, a {
 #register input[type=submit],
 #formulaireLog input[type=submit], 
 #tiny input[type=submit],
-#previewQuestion {
+#tinyAnswer input[type=submit],
+#previewQuestion, #previewAnswer {
 	clear: both;
 	padding: 10px 30px;
 	background-color: rgba(113, 212, 254, 0.7);
@@ -223,7 +230,8 @@ input[type=submit], button, a {
 
 #register input[type=submit]:hover,
 #formulaireLog input[type=submit]:hover,
-#tiny input[type=submit]:hover {
+#tiny input[type=submit]:hover,
+#tinyAnswer input[type=submit]:hover, {
 	background-color: rgba(113, 212, 254, 1);
 }
 
@@ -279,7 +287,6 @@ input[type=submit], button, a {
 	margin-top: 20px;
 	height: 100%;
 	margin-bottom: 20px;
-
 }
 
 #previewSubmitButton {
@@ -291,16 +298,19 @@ input[type=submit], button, a {
 	opacity: 0;
 }
 
-#previewSubmitButton #previewQuestion {
+#previewSubmitButton #previewQuestion,
+#previewSubmitButton #previewAnswer {
 	background-color: rgba(27, 188, 155, .5);
 	transition: background-color .3s;
 }
 
-#previewSubmitButton #previewQuestion:hover {
+#previewSubmitButton #previewQuestion:hover,
+#previewSubmitButton #previewAnswer:hover {
 	background-color: rgba(27, 188, 155, 1);
 }
 
 #previewSubmitButton #previewQuestion,
+#previewSubmitButton #previewAnswer,
 #previewSubmitButton #submitQuestion {
 	display: inline;
 	margin: 0;
@@ -368,7 +378,8 @@ input[type=submit], button, a {
 	line-height: 50px;
 }
 
-#seePreview {
+#seePreview, .afficheRecentQuestion,
+#seePreviewAnswer {
 	width: 75%;
 	margin: auto;
 	min-height: 100px;
@@ -379,23 +390,84 @@ input[type=submit], button, a {
 	padding: 20px;
 }
 
-#seePreview p, h2 {
+#seePreviewAnswer {
+	width: 40%;
+	clear: none;
+	float: left;
+}
+
+.afficheRecentQuestion {
+	display: block;
+	margin: auto;
+	text-transform: none;
+	opacity: .5;
+	transition: opacity .3s;
+}
+
+.opacity {
+	opacity: 1;
+}
+
+.afficheRecentQuestion:hover {
+	opacity: 1;
+}
+
+#seePreview p, #seePreview h2,
+#seePreviewAnswer p, #seePreviewAnswer h2,
+.afficheRecentQuestion p, .afficheRecentQuestion h2 {
 	text-indent: 10px;
 	padding: 20px 0;
 }
 
-#seePreview #seeTitre {
+#seePreview #seeTitre,
+.afficheRecentQuestion .seeTitre {
 	background-color: rgba(37, 116, 169, .7);
 	border-bottom: 1px dotted black;
 	color: white;
 }
 
-#seePreview #seeTags {
+#seePreview #seeTags,
+.afficheRecentQuestion .seeTags {
 	background-color: rgba(162, 222, 208, .7);
 	border-bottom: 1px dotted black;
 }
 
-#seePreview #seeDescription {
+#seePreview #seeDescription,
+#seePreviewAnswer #seeDescription,
+.afficheRecentQuestion .seeDescription {
 	background-color: rgba(239, 244, 255, .7);
-	
+}
+
+.afficheRecentQuestion .informationQuestion {
+	background-color: rgba(235, 151, 78, .7);
+}
+
+.informationQuestion li {
+	display: inline;
+	padding: 20px;
+}
+
+.informationQuestion ul {
+	padding: 20px;
+	text-align: right;
+}
+
+/*************************************************/
+/*
+/*
+/*			Répondre à une question
+/*
+/*
+/**************************************************/
+#repondre {
+	margin-left: 60%;
+}
+
+.answerButton {
+	background-color: rgba(82, 179, 217, 0.5);
+	transition: background-color .3s;
+}
+
+.answerButton:hover {
+	background-color: rgba(82, 179, 217, 1);
 }

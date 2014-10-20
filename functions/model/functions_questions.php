@@ -1,15 +1,18 @@
 <?php
-	function insertQuestion($id_users, $question) {
+	function insertQuestion($id_users, $titre, $question) {
 		$dbh = connectDBH();
-		$sql = "INSERT INTO questions
-				VALUES(:id_users, :question, NOW(), NOW()";
+		$sql = "INSERT INTO questions (id_users, titre, question, id_note, view, date_created, date_modified)
+				VALUES(:id_users, :titre, :question, :id_note, NOW(), NOW())";
 
 		$stmt = $dbh->prepare($sql);
 		$stmt->bindValue(":id_users", $id_users);
+		$stmt->bindValue(":titre", $titre);
 		$stmt->bindValue(":question", $question);
+		$stmt->bindValue(":id_note", ASK_QUESTION);
+		$stmt->bindValue(":view", 0);
 
 		$stmt->execute();
-		$id = $stmt->lastInsertId();
+		$id = $dbh->lastInsertId();
 
 		closeDBH($dbh);
 		return $id;
@@ -28,6 +31,67 @@
 
 		closeDBH($dbh);
 		return $count;
+	}
+
+	function getRecentQuestions() {
+		$dbh = connectDBH();
+		$sql = "SELECT * FROM questions
+				ORDER BY date_created DESC
+				LIMIT 3";
+
+		$stmt = $dbh->prepare($sql);
+		$stmt->execute();
+		$questions = $stmt->fetchAll();
+
+		closeDBH($dbh);
+		return $questions;
+	}
+
+	function getQuestion($id_question) {
+		$dbh = connectDBH();
+		$sql = "SELECT * FROM questions
+				WHERE id = :id_question";
+
+		$stmt = $dbh->prepare($sql);
+		$stmt->bindValue(":id_question", $id_question);
+
+		$stmt->execute();
+		$question = $stmt->fetchAll();
+
+		closeDBH($dbh);
+		return $question;
+	}
+
+	function getUserQuestion($id_question, $id_user) {
+		$dbh = connectDBH();
+		$sql = "SELECT COUNT(*) AS find FROM questions
+				WHERE id = :id_question
+				AND id_users = :id_user";
+
+		$stmt = $dbh->prepare($sql);
+		$stmt->bindValue(":id_question", $id_question);
+		$stmt->bindValue(":id_user", $id_user);
+
+		$stmt->execute();
+		$find = $stmt->fetchColumn();
+
+		closeDBH($dbh);
+		return $find;
+	}
+
+	function addView($id_question) {
+		$dbh = connectDBH();
+		$sql = "UPDATE questions
+				SET view = view + 1 
+				WHERE id = :id_question";
+
+		$stmt = $dbh->prepare($sql);
+		$stmt->bindValue(":id_question", $id_question);
+
+		$maj = $stmt->execute();
+
+		closeDBH($dbh);
+		return $maj;
 	}
 
 ?>

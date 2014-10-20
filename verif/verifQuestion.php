@@ -1,9 +1,23 @@
 <?php 
-	include("presentation/header.php");
-	include("presentation/top.php");
+	if($_POST) {
 
-	echo $_POST['textQuestion'];
+		$id = $_SESSION['id'];
+		$titreQuestion = strip_tags($_POST['titreQuestion']);
+		$tagsQuestion = $_POST['tagsQuestion'];
+		$textQuestion = $_POST['textQuestion'];
+
+		$tagsQuestion = explode(", ", $tagsQuestion);
+
+		$idQuestion = insertQuestion($id,$titreQuestion, $textQuestion);
+		insertTagsQuestion($idQuestion, $tagsQuestion);
+
+		if($idQuestion) {
+			header(PAGE_ACCUEIL);
+			die();
+		}
+	
+	} else {
+
+	}
+
 ?>
-	<script type="text/javascript">
-     SyntaxHighlighter.all()
-</script>

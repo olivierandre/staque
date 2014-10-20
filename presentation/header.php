@@ -9,7 +9,7 @@
 		<link rel="stylesheet" href="css/style.css" /> 
 		<link rel="stylesheet" href="js/jquery-ui/jquery-ui.min.css" />
 
-	<?php if($page === "question") : ?>
+	<?php if($page === "question" || $page === "home" || $page === "reponse") : ?>
 		<link href="js/syntax/styles/shCore.css" rel="stylesheet" type="text/css" />
 		<link href="js/syntax/styles/shThemeDefault.css" rel="stylesheet" type="text/css" />
 		<link href="js/autocomplete/autocomplete.css" rel="stylesheet" type="text/css" />

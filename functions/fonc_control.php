@@ -56,8 +56,12 @@
 		showPage("verif", null);
 	}
 
+	function verifAnswer() {
+		showPage("verif", null);
+	}
+
 	/*
-	*	Gestion des questions
+	*	Gestion des questions/réponses
 	*/  
 	function question() {
 		$pseudo = $_SESSION['pseudo'];
@@ -68,6 +72,11 @@
 
 		showPage("question", "Posez votre question, ".$pseudo);
 	}
+
+	function reponse() {
+		showPage("reponse", "Apportez une réponse ...");
+	}
+
 
 	/*
 	*	Affiche les pages

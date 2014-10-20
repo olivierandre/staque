@@ -3,7 +3,7 @@ On arrive sur l’écran ou l’on valide son pseudo (display name) + possibilit
 Guide d’utilisation —> http://stackoverflow.com/tour
 On arrive avec 1 point de réputation
 
-users
+users --> OK
 	id
 	pseudo
 	firstname
@@ -21,18 +21,19 @@ users
 	token
 	validCount
 	actif
+	id_note
 	dateCreated
 	dateModified
 
-questions
+questions --> OK
 	id
 	id_users
 	question
-	tags
+	id_note
 	dateCreated
 	dateModified
 
-tags_questions
+tags_questions --> OK
 	id_questions
 	tag_name
 
@@ -40,23 +41,21 @@ answers —> Principe d’une réponse à une réponse : on répond à la répon
 	id
 	id_users
 	id_questions
-	id_answer_respond —> null possible
 	answer
-	resolve_question —> bool (only one by question)
+	resolve —> bool (only one by question)
 	dateCreated
 	dateModified
 
-comment_answers —> A voir …
+comment_answers —> A faire !!!
 	id
 	id_users
 	id_answer
 	dateCreated
 	dateModified
 
-note	
-	id
-	id_note
+note_answer	
 	id_answer
+	id_note
 	id_user —> Celui qui a noté. 1 vote par personne
 	dateCreated
 	dateModified

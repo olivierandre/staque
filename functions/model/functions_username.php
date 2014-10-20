@@ -112,8 +112,23 @@
 		return $date;
 	}
 
+	function getPseudo($id) {
+		$dbh = connectDBH();
+		$sql = "SELECT pseudo FROM users
+				WHERE id = :id";
+
+		$stmt = $dbh->prepare($sql);
+		$stmt->bindValue(":id", $id);
+
+		$stmt->execute();
+		$user = $stmt->fetchColumn();
+
+		closeDBH($dbh);
+		return $user;
+	}
 
 
+// OLD
 	function updateUser($email, $password, $oldToken, $newToken) {
 		$dbh = connectDBH();
 		$sql = "UPDATE usercontrol
@@ -186,21 +201,6 @@
 
 		closeDBH($dbh);
 		return $user;
-	}
-
-	function getPseudo($id) {
-		$dbh = connectDBH();
-		$sql = "SELECT pseudo FROM users
-				WHERE id = :id";
-		
-		$stmt = $dbh->prepare($sql);
-		$stmt->bindValue(":id", $id);
-
-		$stmt->execute();
-		$pseudo = $stmt->fetchColumn();
-
-		closeDBH($dbh);
-		return $pseudo;
 	}
 
 	function findMail($username) {

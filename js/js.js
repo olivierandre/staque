@@ -7,8 +7,7 @@ app = {
 		date.init();
 		buzz.init();
 		tiny.init();
-		affiche.init();
-		autocomplete.init();	
+		affiche.init();	
 	}
 }
 
@@ -22,7 +21,9 @@ click = {
 		_this.clickLogProfil();
 		_this.clickUpdateProfil();
 		_this.clickPreviewButton();
+		_this.clickPreviewAnswerButton()
 		_this.focusInputQuestion();
+		_this.clickAnswer();
 
 	},
 
@@ -50,7 +51,14 @@ click = {
 
 	clickPreviewButton: function() {
 		$("#previewQuestion").on("click", function() {
-			affiche.previewResultTextarea();
+			affiche.previewResultTextarea(true);
+			return false;
+		})
+	},
+
+	clickPreviewAnswerButton: function() {
+		$("#previewAnswer").on("click", function() {
+			affiche.previewResultTextarea(false);
 			return false;
 		})
 	},
@@ -58,6 +66,13 @@ click = {
 	focusInputQuestion: function() {
 		$("#tiny").on("focusout", function() {
 			affiche.afficheTextarea()
+		})
+	},
+
+	clickAnswer: function() {
+		$(".answerButton").on("click", function() {
+			affiche.afficheAnswerTextarea();
+			return false;
 		})
 	}
 }
@@ -83,10 +98,14 @@ affiche = {
 		_this = this;
 		_this.inputTiny = $("#tiny input");
 
+		if(!typeof widget === 'undefined') {
+			_this.tagInput = widget.getValue().length;
+		}
+
 		_this.titleInput = _this.inputTiny.first().val().split(" ").join("").length;
-		_this.tagInput = widget.getValue().length;
+		console.log(_this.titleInput);
 		
-		if(_this.titleInput > 0 && _this.tagInput > 0) {
+		if(_this.titleInput > 0 && _this.tagInput > 0)  {
 			$(".textarea, #previewSubmitButton").animate({
 				opacity: 1
 			})
@@ -97,22 +116,48 @@ affiche = {
 		}
 	},
 
-	previewResultTextarea: function() {
-		var	val = tinyMCE.activeEditor.getContent();
-		_this.seePreview = $("#seePreview");
+	afficheAnswerTextarea: function(bool) {
+		_this = this;
+		_this.boxTiny = $(".textarea, #previewSubmitButton")
 
+		if( _this.boxTiny.css('opacity') == 0) {
+			_this.boxTiny.animate({
+				opacity: 1
+			})
+		} else {
+			_this.boxTiny.animate({
+				opacity: 0
+			})
+		}
+	},
+
+	previewResultTextarea: function(question) {
+		var	val = tinyMCE.activeEditor.getContent();
+		
+		if(question) {
+			_this.seePreview = $("#seePreview");
+		} else {
+			_this.seePreview = $("#seePreviewAnswer");
+		}
+		
 		_this.seePreview.empty();
 
 		$("<p>").text("Visualisation de votre message").appendTo(_this.seePreview);
-		$("<div>").attr("id", "seeTitre").appendTo(_this.seePreview);
-		$("<div>").attr("id", "seeTags").appendTo(_this.seePreview);
+		if(question) {
+			$("<div>").attr("id", "seeTitre").appendTo(_this.seePreview);
+			$("<div>").attr("id", "seeTags").appendTo(_this.seePreview);
+		}
+	
 		$("<div>").attr("id", "seeDescription").appendTo(_this.seePreview);
 
-		$("<h2>").text( $("#titreQuestion").val() ).appendTo("#seeTitre");
-		$("<p>").text( autocomplete.getValue(widget.getValue()) ).appendTo("#seeTags");
+		if(question) {
+			$("<h2>").text( $("#titreQuestion").val() ).appendTo("#seeTitre");
+			$("<p>").text( autocomplete.getValue(widget.getValue()) ).appendTo("#seeTags");
+		}
+		
 		$("#seeDescription").html(val);
 
-		$("#seePreview").fadeIn({
+		_this.seePreview.fadeIn({
 			complete : function() {
 				$("#submitQuestion").animate({
 					opacity: 1
@@ -125,34 +170,40 @@ affiche = {
 
 autocomplete = {
 	init: function() {
-		setInterval(widget.blur, 5000);
+		//setInterval(widget.blur, 5000);
 	},
 
 	getValue: function(val) {
-		test = val;
 		texte = "";
-
-		len = test.length;
+		len = val.length;
 
 		for(i=0; i < len; i++) {
-			texte += test[i][0].value + ', ';
+			texte += val[i][0].value + ', ';
 		}
 
-		return texte.slice(0, texte.length - 2)
+		texte = texte.slice(0, texte.length - 2)
+		$("#tagsQuestion").val(texte);
+
+		return texte
 	}
 }
 
 tiny = {
 	init: function() {
-		tinymce.init({
-		    selector: "textarea",
-		    menubar: false,
-		    plugins: [
-		        "preview sh4tinymce"
-		    ],
-		    toolbar: "undo redo | sh4tinymce | code",
-		    height : 300
-		});
+
+		autocomplete.init();
+
+		if(typeof tinymce !== 'undefined') {
+			tinymce.init({
+			    selector: "textarea",
+			    menubar: false,
+			    plugins: [
+			        "preview sh4tinymce"
+			    ],
+			    toolbar: "undo redo | sh4tinymce | code",
+			    height : 300
+			})
+		}
 	}
 }
 
@@ -175,7 +226,6 @@ update = {
 				
 			}
 		})
-		
 	},
 
 	ajaxLogProfil: function(e) {
@@ -285,7 +335,6 @@ buzz = {
 	},
 
 	shakeQuestion: function() {
-
 		setInterval(function() {
 			$( ".boutonQuestion" ).effect("shake", {
 				times : 2

@@ -7,3 +7,4 @@
 	<a href="index.php?page=register">... ou vous inscrire</a>
 </div>
 
+<?php include("question/afficheQuestion.php"); ?>
