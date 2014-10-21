@@ -1,17 +1,19 @@
 <?php
-	function insertScore($id) {
+
+	function insertScore($id_answer, $id_note, $id_user) {
 		$dbh = connectDBH();
-		$sql = "";
+		$sql = "INSERT INTO note_answer
+				VALUES(:id_answer, :id_note, :id_user, NOW(), NOW())";
 
 		$stmt = $dbh->prepare($sql);
-		$stmt->bindValue(":pseudo", $pseudo);
-		$stmt->bindValue(":id", $id);
+		$stmt->bindValue(":id_answer", $id_answer);
+		$stmt->bindValue(":id_note", $id_note);
+		$stmt->bindValue(":id_user", $id_user);
 
-		$stmt->execute();
-		$userFind = $stmt->fetchColumn();
+		$return = $stmt->execute();
 
 		closeDBH($dbh);
-		return $userFind;
+		return $return;
 	}
 
 	function getScoreInscription($id_user) {
@@ -46,7 +48,7 @@
 		return $score;
 	}
 
-	function getScoreUser($id_user) {
+	/*function getScoreUser($id_user) {
 		$dbh = connectDBH();
 		$sql = "SELECT SUM(score) AS score FROM score
 				WHERE id_user = :id_user";
@@ -58,12 +60,47 @@
 
 		closeDBH($dbh);
 		return $score;
-	}
+	}*/
 
 	function getScore($id_users) {
 		$score = getScoreInscription($id_users) + getScoreAskQuestion($id_users);
 		return $score;
 	}
 
+	function getScoreAnswer($id_answer) {
+		$dbh = connectDBH();
+		$sql = "SELECT IFNULL(SUM(tech_score.score), 0) AS somme FROM note_answer 
+				JOIN tech_score ON tech_score.id = note_answer.id_note
+				WHERE id_answer = :id_answer 
+				AND tech_score.id != :tech_score_id";
+		
+		$stmt = $dbh->prepare($sql);
+		$stmt->bindValue(":id_answer", $id_answer);
+		$stmt->bindValue(":tech_score_id", VOTE_BAD_ANSWER);
 
+		$stmt->execute();
+		$score = $stmt->fetchColumn();
+
+		closeDBH($dbh);
+		return $score;
+	}
+
+	function isVote($id_question, $id_answer, $id_user) {
+		$dbh = connectDBH();
+		$sql = "SELECT COUNT(*) AS count FROM note_answer 
+				JOIN answers ON answers.id = note_answer.id_answer
+				WHERE id_answer = :id_answer AND note_answer.id_user = :id_user 
+				AND answers.id_question = :id_question";
+		
+		$stmt = $dbh->prepare($sql);
+		$stmt->bindValue(":id_question", $id_question);
+		$stmt->bindValue(":id_answer", $id_answer);
+		$stmt->bindValue(":id_user", $id_user);
+
+		$stmt->execute();
+		$count = $stmt->fetchColumn();
+
+		closeDBH($dbh);
+		return $count;
+	}
 ?>

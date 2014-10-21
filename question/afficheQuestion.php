@@ -28,6 +28,11 @@
 <a <?php else :?>
 <div <?php endif ?>
 class="afficheRecentQuestion <?= $opacity ?>" href="index.php?page=reponse&id_question=<?= $id_question ?>">
+
+<?php if($page === "reponse") : ?>
+	<h3>La question ...</h3>
+<?php endif ?>
+
 	<div class="seeTitre">
 		<h2><?= $question['titre'] ?></h2>
 	</div>

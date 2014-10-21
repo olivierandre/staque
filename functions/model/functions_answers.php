@@ -1,7 +1,7 @@
 <?php
 	function insertAnswer($id_user, $id_question, $answer) {
 		$dbh = connectDBH();
-		$sql = "INSERT INTO answers (id_user, id_questions, answer, resolve, date_created, date_modified)
+		$sql = "INSERT INTO answers (id_user, id_question, answer, resolve, date_created, date_modified)
 				VALUES(:id_user, :id_question, :answer, FALSE, NOW(), NOW())";
 
 		$stmt = $dbh->prepare($sql);
@@ -21,7 +21,7 @@
 		$dbh = connectDBH();
 		$sql = "SELECT * FROM answers
 				WHERE id_question = :id_question
-				ORDER BY resolve, date_created";
+				ORDER BY resolve, date_created DESC";
 		// todo : ne pas oublier de prendre en compte le score avant la date de création
 
 		$stmt = $dbh->prepare($sql);

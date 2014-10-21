@@ -53,7 +53,7 @@ comment_answers —> A faire !!!
 	dateCreated
 	dateModified
 
-note_answer	
+note_answer	- Permet de savoir si une personne a déjà voté et pour quelle question.
 	id_answer
 	id_note
 	id_user —> Celui qui a noté. 1 vote par personne

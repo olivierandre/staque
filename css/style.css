@@ -33,6 +33,10 @@ input[type=submit], button, a {
 	outline: none;
 }
 
+h3 {
+	font-size: 20px;
+}
+
 .clearfix {
 	clear: both;
 }
@@ -311,7 +315,8 @@ input[type=submit], button, a {
 
 #previewSubmitButton #previewQuestion,
 #previewSubmitButton #previewAnswer,
-#previewSubmitButton #submitQuestion {
+#previewSubmitButton #submitQuestion,
+#previewSubmitButton #submitAnswer {
 	display: inline;
 	margin: 0;
 }
@@ -379,18 +384,24 @@ input[type=submit], button, a {
 }
 
 #seePreview, .afficheRecentQuestion,
-#seePreviewAnswer {
+#seePreviewAnswer, #afficheReponse {
 	width: 75%;
 	margin: auto;
 	min-height: 100px;
 	overflow: hidden;
 	clear: both;
-	margin-left: 50px;
 	display: none;
 	padding: 20px;
 }
 
+#seePreview {
+	display: block;
+	opacity: 0;
+}
+
 #seePreviewAnswer {
+	display: block;
+	opacity: 0;
 	width: 40%;
 	clear: none;
 	float: left;
@@ -414,7 +425,8 @@ input[type=submit], button, a {
 
 #seePreview p, #seePreview h2,
 #seePreviewAnswer p, #seePreviewAnswer h2,
-.afficheRecentQuestion p, .afficheRecentQuestion h2 {
+.afficheRecentQuestion p, .afficheRecentQuestion h2,
+.aAnswer p {
 	text-indent: 10px;
 	padding: 20px 0;
 }
@@ -438,7 +450,12 @@ input[type=submit], button, a {
 	background-color: rgba(239, 244, 255, .7);
 }
 
-.afficheRecentQuestion .informationQuestion {
+.aAnswer .seeDescription {
+	background-color: rgba(224, 224, 224, .7);
+}
+
+.afficheRecentQuestion .informationQuestion,
+.aAnswer .informationQuestion {
 	background-color: rgba(235, 151, 78, .7);
 }
 
@@ -470,4 +487,51 @@ input[type=submit], button, a {
 
 .answerButton:hover {
 	background-color: rgba(82, 179, 217, 1);
+}
+
+#afficheReponse {
+	display: block;
+	width: 70%;
+	margin-right: 140px;
+}
+
+#afficheReponse h3,
+.afficheRecentQuestion h3 {
+	margin-bottom: 20px;
+}
+ 
+.boutonScore, .aAnswer {
+	float: left;
+	text-align: center;
+	margin-bottom: 50px;
+}
+
+.aAnswer {
+	border: 1px dotted black;
+	margin-bottom: 50px;
+	width: 90%;
+}
+
+.scoreAnswer {
+	padding: 12px 20px;
+	background-color: rgba(0, 236, 255, 0.3);
+	font-weight: 700;
+}
+
+.boutonScore .votePos,
+.boutonScore .voteNeg {
+	width: 100%;
+	border: 0;
+	display: block;
+	color: white;
+	padding: 10px 20px;
+	font-weight: 700;
+	background-color: black;
+	margin-bottom:10px;
+}
+
+.boutonScore div.votePos,
+.boutonScore div.voteNeg {
+	width: auto;
+	opacity: 0;
 }

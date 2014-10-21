@@ -20,10 +20,13 @@ click = {
 		_this.clickBoutonQuestion();
 		_this.clickLogProfil();
 		_this.clickUpdateProfil();
+		_this.clickAddAnswer();
 		_this.clickPreviewButton();
 		_this.clickPreviewAnswerButton()
 		_this.focusInputQuestion();
 		_this.clickAnswer();
+		_this.boutonPos();
+		_this.boutonNeg();
 
 	},
 
@@ -45,6 +48,13 @@ click = {
 	clickUpdateProfil: function() {
 		$("#formProfil").on("submit", function() {
 			update.ajaxUpdateProfil($(this));
+			return false;
+		})
+	},
+
+	clickAddAnswer: function() {
+		$("#tinyAnswer").on("submit", function() {
+			reponse.setReponse($(this));
 			return false;
 		})
 	},
@@ -74,7 +84,60 @@ click = {
 			affiche.afficheAnswerTextarea();
 			return false;
 		})
+	},
+
+	boutonPos: function() {
+		$(".votePos").on("click", function() {
+
+			idAnswer = vote.getIdAnswer($(this))
+
+			vote.voteAnswer($(this).attr('href'), idAnswer);
+			affiche.cacheButtonAnswer(idAnswer);
+			return false;
+		})
+	},
+
+	boutonNeg: function() {
+		$(".voteNeg").on("click", function(e) {
+			idAnswer = vote.getIdAnswer($(this))
+
+			vote.voteAnswer($(this).attr('href'), idAnswer);
+			affiche.cacheButtonAnswer(idAnswer);
+			return false;
+		})
 	}
+}
+
+vote = {
+	init: function() {
+		_this = this;
+	},
+
+	voteAnswer: function(url, idCache) {
+		_this = this;
+		var scoreAnswer = '#scoreAnswer' + idCache + ' p';
+
+		$.ajax({
+			url: url,
+			success: function(data) {
+				console.log(data);
+				$(scoreAnswer).fadeOut({
+				complete: function() {
+						$(scoreAnswer).text(data).fadeIn()
+					}
+				})
+			}
+		})
+	},
+
+	getIdAnswer: function (val) {
+		_this.val = val;
+		id = _this.val.attr('id');
+
+		idCache = id.substr(id.search('_'), id.length);
+		return idCache;
+	}
+
 }
 
 affiche = {
@@ -82,6 +145,17 @@ affiche = {
 		_this = this;
 		_this.errorForm = $('#titreForm h1');
 
+	},
+
+	cacheButtonAnswer: function(idCache) {
+		_this = this;
+
+		idCache = '#boutonScore' + idCache + ' button';
+		console.log(idCache);
+
+		$(idCache).animate({
+				opacity: 0
+			}).removeAttr('href').off();
 	},
 
 	afficheTitreForm: function(texte) {
@@ -103,7 +177,6 @@ affiche = {
 		}
 
 		_this.titleInput = _this.inputTiny.first().val().split(" ").join("").length;
-		console.log(_this.titleInput);
 		
 		if(_this.titleInput > 0 && _this.tagInput > 0)  {
 			$(".textarea, #previewSubmitButton").animate({
@@ -116,9 +189,10 @@ affiche = {
 		}
 	},
 
-	afficheAnswerTextarea: function(bool) {
+	afficheAnswerTextarea: function() {
 		_this = this;
 		_this.boxTiny = $(".textarea, #previewSubmitButton")
+		console.log(_this.boxTiny.css('opacity'));
 
 		if( _this.boxTiny.css('opacity') == 0) {
 			_this.boxTiny.animate({
@@ -132,12 +206,14 @@ affiche = {
 	},
 
 	previewResultTextarea: function(question) {
-		var	val = tinyMCE.activeEditor.getContent();
+		var	val = tinymce.activeEditor.getContent();
 		
 		if(question) {
 			_this.seePreview = $("#seePreview");
+			_this.submit = $("#submitQuestion");
 		} else {
 			_this.seePreview = $("#seePreviewAnswer");
+			_this.submit = $("#submitAnswer");
 		}
 		
 		_this.seePreview.empty();
@@ -157,14 +233,16 @@ affiche = {
 		
 		$("#seeDescription").html(val);
 
-		_this.seePreview.fadeIn({
+		_this.seePreview.animate({
+			opacity: 1,
 			complete : function() {
-				$("#submitQuestion").animate({
+
+				_this.submit.animate({
 					opacity: 1
 				})
 				SyntaxHighlighter.highlight();
 			}
-		});		
+		})	
 	}
 }
 
@@ -236,6 +314,7 @@ update = {
 			type: e.attr("method"),
 			data: e.serialize(),
 			success: function(html) {
+
 				$('body').fadeOut({
 					duration: 1500,
 					complete: function() {
@@ -258,6 +337,57 @@ update = {
 			}
 		})
 		
+	}
+}
+
+reponse = {
+	init: function() {
+		_this = this;
+	},
+
+	setReponse: function(e) {
+		_this = this;
+		var response = "";
+		var	val = tinymce.activeEditor.getContent();
+		$('.textarea textarea').html(val);
+
+		$.ajax({
+			url: e.attr("action"),
+			type: e.attr("method"),
+			data: e.serialize(),
+			success: function(html) {
+				response = $(html).filter('#afficheReponse').html();
+
+				//tinymce.remove();
+				$('.textarea textarea').text(" ");
+				
+				$('#divFormTiny').animate({
+					opacity: 1
+				}
+				,{	complete: function() {
+						$(".textarea, #previewSubmitButton").css({
+							opacity: 0
+						});
+
+
+						$('#seePreviewAnswer').animate({
+							opacity: 0
+						},{	complete: function() {
+								$('#afficheReponse').animate({
+									opacity: 0
+								},{	complete: function() {
+										$('#afficheReponse').empty().append(response).animate({
+											opacity: 1
+										});
+										SyntaxHighlighter.highlight();
+									}
+								})
+							}
+						})	
+					}
+				})
+			}
+		})
 	}
 }
 

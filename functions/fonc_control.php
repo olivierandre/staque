@@ -60,6 +60,10 @@
 		showPage("verif", null);
 	}
 
+	function verifVote() {
+		showPage("verif", null);
+	}
+
 	/*
 	*	Gestion des questions/réponses
 	*/  

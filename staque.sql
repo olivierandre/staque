@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Client :  127.0.0.1
--- Généré le :  Lun 20 Octobre 2014 à 17:25
+-- Généré le :  Mar 21 Octobre 2014 à 17:25
 -- Version du serveur :  5.6.16
 -- Version de PHP :  5.5.11
 
@@ -35,14 +35,48 @@ CREATE TABLE IF NOT EXISTS `answers` (
   `date_created` datetime NOT NULL,
   `date_modified` datetime NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=2 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=80 ;
 
 --
 -- Contenu de la table `answers`
 --
 
 INSERT INTO `answers` (`id`, `id_user`, `id_question`, `answer`, `resolve`, `date_created`, `date_modified`) VALUES
-(1, 6, 6, '<p>La question est pas terrible ...</p>', 0, '2014-10-20 17:09:24', '2014-10-20 17:09:24');
+(1, 8, 6, '<p>La question est pas terrible ...</p>', 0, '2014-10-20 17:09:24', '2014-10-20 17:09:24'),
+(2, 6, 6, '<p>Vraiment nul comme question ...</p>', 0, '2014-10-21 12:23:50', '2014-10-21 12:23:50'),
+(3, 6, 3, '<p>est-ce que la class "String" existe ?</p>', 0, '2014-10-21 12:50:10', '2014-10-21 12:50:10'),
+(11, 6, 2, '<p>toto</p>\r\n<pre class="brush:php;auto-links:false;toolbar:false" contenteditable="false">echo "coucou"</pre>\r\n<p> </p>', 0, '2014-10-21 15:11:07', '2014-10-21 15:11:07');
+
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `note_answer`
+--
+
+CREATE TABLE IF NOT EXISTS `note_answer` (
+  `id_answer` int(11) NOT NULL,
+  `id_note` int(11) NOT NULL,
+  `id_user` int(11) NOT NULL,
+  `date_created` datetime NOT NULL,
+  `date_modified` datetime NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Contenu de la table `note_answer`
+--
+
+INSERT INTO `note_answer` (`id_answer`, `id_note`, `id_user`, `date_created`, `date_modified`) VALUES
+(1, 5, 6, '2014-10-21 12:36:19', '2014-10-21 12:36:19'),
+(2, 5, 6, '2014-10-21 12:36:21', '2014-10-21 12:36:21'),
+(0, 7, 0, '2014-10-21 12:58:09', '2014-10-21 12:58:09'),
+(0, 6, 0, '2014-10-21 12:58:09', '2014-10-21 12:58:09'),
+(2, 7, 3, '2014-10-21 13:00:23', '2014-10-21 13:00:23'),
+(2, 6, 3, '2014-10-21 13:00:23', '2014-10-21 13:00:23'),
+(1, 7, 3, '2014-10-21 13:00:26', '2014-10-21 13:00:26'),
+(1, 6, 3, '2014-10-21 13:00:26', '2014-10-21 13:00:26'),
+(3, 5, 3, '2014-10-21 14:12:32', '2014-10-21 14:12:32'),
+(4, 5, 3, '2014-10-21 14:18:16', '2014-10-21 14:18:16'),
+(11, 5, 3, '2014-10-21 16:26:47', '2014-10-21 16:26:47');
 
 -- --------------------------------------------------------
 
@@ -67,9 +101,9 @@ CREATE TABLE IF NOT EXISTS `questions` (
 --
 
 INSERT INTO `questions` (`id`, `id_users`, `titre`, `question`, `id_note`, `view`, `date_created`, `date_modified`) VALUES
-(2, 3, 'Question 1', '<p>Ceci est une question test</p>\r\n<pre class="brush:js;auto-links:false;toolbar:false" contenteditable="false">&lt;script&gt;\r\n    alert("coucou");\r\n&lt;/script&gt;</pre>\r\n<p>Merci !</p>', 2, 0, '2014-10-20 11:28:30', '2014-10-20 11:28:30'),
-(3, 3, 'Problème avec Java', '<pre class="brush:java;auto-links:false;toolbar:false" contenteditable="false">toto = new String("toto");</pre>\r\n<p>Ce code ne fonctionne pas ...</p>', 2, 2, '2014-10-20 11:34:55', '2014-10-20 11:34:55'),
-(6, 3, 'Nouvelle question PHP', '<pre class="brush:php;auto-links:false;toolbar:false" contenteditable="false">function coucou($texte) {\r\n    return echo $texte;\r\n}</pre>\r\n<p>Ca marche pas &ccedil;a !</p>', 2, 101, '2014-10-20 11:37:32', '2014-10-20 11:37:32');
+(2, 3, 'Question 1', '<p>Ceci est une question test</p>\r\n<pre class="brush:js;auto-links:false;toolbar:false" contenteditable="false">&lt;script&gt;\r\n    alert("coucou");\r\n&lt;/script&gt;</pre>\r\n<p>Merci !</p>', 2, 124, '2014-10-20 11:28:30', '2014-10-20 11:28:30'),
+(3, 3, 'Problème avec Java', '<pre class="brush:java;auto-links:false;toolbar:false" contenteditable="false">toto = new String("toto");</pre>\r\n<p>Ce code ne fonctionne pas ...</p>', 2, 18, '2014-10-20 11:34:55', '2014-10-20 11:34:55'),
+(6, 3, 'Nouvelle question PHP', '<pre class="brush:php;auto-links:false;toolbar:false" contenteditable="false">function coucou($texte) {\r\n    return echo $texte;\r\n}</pre>\r\n<p>Ca marche pas &ccedil;a !</p>', 2, 418, '2014-10-20 11:37:32', '2014-10-20 11:37:32');
 
 -- --------------------------------------------------------
 
