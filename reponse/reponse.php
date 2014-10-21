@@ -39,14 +39,14 @@
 			<div class="boutonScore" id="boutonScore_<?= $idAnswer ?>">
 			<div id="scoreAnswer_<?= $idAnswer ?>" class="scoreAnswer"><p><?= $scoreAnswer ?></p></div>
 			<?php 
-				if(!$isVote && ($user_id_answer !== $id_user)) {
+				if(!$isVote && ($user_id_answer !== $id_user) && isLog()) {
 					$affiche = '<button href="index.php?page=verifVote&idAnswer='.$idAnswer.'&vote=pos&user_vote='.$id_user.'" id="votePos_'.$idAnswer.'" class="votePos">+</button>';
 				} else {
 					$affiche = '<div class="votePos"><p>+</p></div>';
 				}
 					echo $affiche;
 				
-				if(!$isVote && ($user_id_answer !== $id_user)) {
+				if(!$isVote && ($user_id_answer !== $id_user) && isLog()) {
 					$affiche = '<button href="index.php?page=verifVote&idAnswer='.$idAnswer.'&vote=neg&user_vote='.$id_user.'" id="voteNeg_'.$idAnswer.'" class="voteNeg">-</button>';
 				} else {
 					$affiche = '<div class="voteNeg"><p>-</p></div>';

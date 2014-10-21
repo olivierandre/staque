@@ -11,7 +11,7 @@
 		$_POST = "";
 
 		if($id) {
-			header("Location: http://localhost/staque/index.php?page=reponse&id_question=$id_question");
+			header("Location: http://localhost:8888/staque/index.php?page=reponse&id_question=$id_question");
 			die();
 		}
 

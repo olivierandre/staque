@@ -192,7 +192,6 @@ affiche = {
 	afficheAnswerTextarea: function() {
 		_this = this;
 		_this.boxTiny = $(".textarea, #previewSubmitButton")
-		console.log(_this.boxTiny.css('opacity'));
 
 		if( _this.boxTiny.css('opacity') == 0) {
 			_this.boxTiny.animate({
@@ -347,9 +346,8 @@ reponse = {
 
 	setReponse: function(e) {
 		_this = this;
-		var response = "";
-		var	val = tinymce.activeEditor.getContent();
-		$('.textarea textarea').html(val);
+
+		$('.textarea textarea').val(tinymce.activeEditor.getContent());
 
 		$.ajax({
 			url: e.attr("action"),
@@ -358,17 +356,11 @@ reponse = {
 			success: function(html) {
 				response = $(html).filter('#afficheReponse').html();
 
-				//tinymce.remove();
-				$('.textarea textarea').text(" ");
-				
-				$('#divFormTiny').animate({
-					opacity: 1
-				}
-				,{	complete: function() {
-						$(".textarea, #previewSubmitButton").css({
-							opacity: 0
-						});
-
+				$(".textarea, #previewSubmitButton").animate({
+					opacity: 0
+				},{	complete: function() {
+						tinymce.activeEditor.setContent("");
+						$('.textarea textarea').val("");
 
 						$('#seePreviewAnswer').animate({
 							opacity: 0
