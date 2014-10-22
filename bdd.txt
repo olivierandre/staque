@@ -37,7 +37,7 @@ tags_questions --> OK
 	id_questions
 	tag_name
 
-answers —> Principe d’une réponse à une réponse : on répond à la réponse quand on a assez de réputation puis on peut laisser un commentaire sur une réponse. On ne pas pas répondre à une réponse d’une réponse.
+answers —> Principe d’une réponse à une réponse : on répond à la réponse quand on a assez de réputation puis on peut laisser un commentaire sur une réponse. On ne pas pas répondre à une réponse d’une réponse. --> OK
 	id
 	id_users
 	id_questions
@@ -46,14 +46,14 @@ answers —> Principe d’une réponse à une réponse : on répond à la répon
 	dateCreated
 	dateModified
 
-comment_answers —> A faire !!!
-	id
+comment_answers —> OK
 	id_users
 	id_answer
+	comment
 	dateCreated
 	dateModified
 
-note_answer	- Permet de savoir si une personne a déjà voté et pour quelle question.
+note_answer	- Permet de savoir si une personne a déjà voté et pour quelle question. --> OK
 	id_answer
 	id_note
 	id_user —> Celui qui a noté. 1 vote par personne

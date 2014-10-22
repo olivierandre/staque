@@ -127,6 +127,20 @@
 		return $user;
 	}
 
+	function getIdViaPseudo($pseudo) {
+		$dbh = connectDBH();
+		$sql = "SELECT id FROM users
+				WHERE pseudo = :pseudo";
+
+		$stmt = $dbh->prepare($sql);
+		$stmt->bindValue(":pseudo", $pseudo);
+
+		$stmt->execute();
+		$id = $stmt->fetchColumn();
+
+		closeDBH($dbh);
+		return $id;
+	}
 
 // OLD
 	function updateUser($email, $password, $oldToken, $newToken) {

@@ -29,6 +29,7 @@ input {
 }
 
 input[type=submit], button, a {
+	text-transform: uppercase;
 	cursor: pointer;
 	outline: none;
 }
@@ -41,7 +42,7 @@ h3 {
 	clear: both;
 }
 
-.button {
+button {	
 	padding: 10px 30px;
 	border: 0;
 	color: white;
@@ -107,6 +108,10 @@ h3 {
 /*
 /*
 /**************************************************/
+#accueilQuestion {
+	overflow: hidden;
+}
+
 #question, #messageConnexion {
 	clear: both;
 	width: 100%;
@@ -141,6 +146,47 @@ h3 {
 
 #messageConnexion a:hover {
 	background-color: rgba(200, 78, 215, 1);
+}
+
+#pagination {
+	margin: auto;
+	margin: 50px 0;
+	text-align: center;
+}
+
+#pagination a {
+	color: white;
+	margin-left: auto;
+	padding: 10px 30px;
+	background-color: rgba(103, 65, 114, .7);
+	transition: background-color .3s;
+}
+
+#pagination a:hover {
+	background-color: rgba(103, 65, 114, 1);
+}
+
+
+/*************************************************/
+/*
+/*
+/*			Affiche Profil
+/*
+/*
+/**************************************************/
+#afficheProfil {
+	width: 50%;
+	float: right;
+	margin-left: 50px;
+	margin-top: 50px;
+}
+
+#afficheProfil p {
+	display: block;
+	margin-bottom: 20px;
+	width: 400px;
+	padding: 20px;
+	background-color: rgba(197, 239, 247, .7);
 }
 
 /*************************************************/
@@ -507,7 +553,7 @@ h3 {
 }
 
 .aAnswer {
-	border: 1px dotted black;
+	/*border: 1px dotted black;*/
 	margin-bottom: 50px;
 	width: 90%;
 }
@@ -534,4 +580,98 @@ h3 {
 .boutonScore div.voteNeg {
 	width: auto;
 	opacity: 0;
+}
+
+.boutonBestAnswer {
+	float: left;
+}
+
+.boutonBestAnswer a {
+	padding: 10px 30px;
+	display: block;
+	background-color: rgba(38, 194, 129, 0.5);
+	transition: background-color .3s;
+	color: black;
+}
+
+.boutonBestAnswer button:hover{
+	background-color: rgba(38, 194, 129, 1);
+	transition: background-color .3s;
+}
+
+.boutonComment, .boutonCommentAffiche {
+	float: right;
+	margin-bottom: 10px;
+	margin-left: 10px;
+}
+
+.boutonComment a, .boutonCommentAffiche a {
+	display: block;
+	padding: 10px 30px;
+	background-color: rgba(224, 130, 131, 0.5);
+	transition: background-color .3s;
+	color: black;
+}
+
+.boutonCommentAffiche a {
+	background-color: rgba(175, 224, 130, 0.5);
+}
+
+.boutonCommentAffiche a:hover {
+	background-color: rgba(175, 224, 130, 1);
+}
+
+.boutonComment a:hover {
+	background-color: rgba(224, 130, 131, 1);
+}
+
+.bestAnswer {
+	border: 10px solid rgba(1, 152, 117, 1);
+}
+
+.h3bestAnswer {
+	padding: 20px;
+	width: 350px;
+	text-align: center
+}
+
+.autresReponses {
+	padding: 20px;
+	border-top: 2px solid red;
+	width: 500px;
+}
+
+.comment {
+	clear: both;
+	width: 100%;
+	margin-top: 10px;
+}
+
+.formComment input[type=text] {
+	margin-left: auto;
+	width: 50%;
+	display: block;
+	padding: 20px 0;
+	margin-bottom: 10px;
+	text-indent: 10px;
+	transition: text-indent .3s, box-shadow .3s;
+	outline: none;
+}
+
+.formComment input[type=text]:focus {
+	text-indent: 20px;
+	box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+}
+
+.formComment input[type=submit] {
+	margin-left: auto;
+	display: block;
+	padding: 10px 30px;
+	transition: background-color .3s;
+	background-color: rgba(113, 212, 254, 0.5);
+	border: 0;
+}
+
+.formComment input[type=submit]:hover {
+	background-color: rgba(113, 212, 254, 1);
 }

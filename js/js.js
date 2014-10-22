@@ -27,6 +27,8 @@ click = {
 		_this.clickAnswer();
 		_this.boutonPos();
 		_this.boutonNeg();
+		_this.boutonBestAnswer();
+		_this.boutonPagination();
 
 	},
 
@@ -105,6 +107,137 @@ click = {
 			affiche.cacheButtonAnswer(idAnswer);
 			return false;
 		})
+	},
+
+	boutonBestAnswer: function() {
+		$(".boutonBestAnswer a").on("click", function(e) {
+			idAnswer = vote.getIdAnswer($(this).parent())
+			reponse.bestAnswer($(this).attr('href'), idAnswer);
+			
+			return false;
+		})
+	},
+
+	boutonPagination: function() {
+		$("#pagination a").on('click', function() {
+			pagination.changePage($(this).attr('href'), $(this).attr('id'));
+			return false;
+		})
+	}
+}
+
+pagination = {
+	init: function() {
+		_this = this;
+	},
+
+	changePage: function(url, id) {
+
+		firstDirection = 'right';
+		lastDirection = 'left'
+		
+		if(id === 'prec') {
+			firstDirection = 'left';
+			lastDirection = 'right';
+		} 
+
+		$.ajax({
+			url: url,
+			success: function(html) {
+				response = $(html).filter('#accueilQuestion').html();
+
+				$('#accueilQuestion').hide({
+							effect: "slide", 
+							direction : firstDirection, 
+							easing: 'easeInExpo',
+							duration: 800,
+							complete: function() {
+								$('#accueilQuestion').empty().append(response);
+								click.boutonPagination();
+								SyntaxHighlighter.highlight();
+							}
+						}).show({
+							effect: "slide", 
+							direction : lastDirection, 
+							easing: 'easeOutExpo',
+							duration: 800,
+						})
+			}
+		})
+	}
+}
+
+reponse = {
+	init: function() {
+		_this = this;
+	},
+
+	bestAnswer: function(url, id) {
+		_this = this;
+		idAnswer = '#aAnswer' + id;
+
+		$.ajax({
+			url: url,
+			success: function(html) {
+				response = $(html).filter('#afficheReponse').html();
+				
+				$('#afficheReponse').hide({
+							effect: "slide", 
+							direction : "right" , 
+							easing: 'easeInExpo',
+							duration: 800,
+							complete: function() {
+								$('#afficheReponse').empty().append(response);
+								$("#afficheReponse h3").text("Voici la meilleure réponse !!!").addClass('h3bestAnswer');
+								//buzz.highlight($("#afficheReponse h3"));
+								SyntaxHighlighter.highlight();
+							}
+						}).show({
+							effect: "slide", 
+							direction : "left" , 
+							easing: 'easeOutExpo',
+							duration: 800,
+						})
+			}
+		})
+	},
+
+	setReponse: function(e) {
+		_this = this;
+
+		$('.textarea textarea').val(tinymce.activeEditor.getContent());
+
+		$.ajax({
+			url: e.attr("action"),
+			type: e.attr("method"),
+			data: e.serialize(),
+			success: function(html) {
+				response = $(html).filter('#afficheReponse').html();
+
+				$(".textarea, #previewSubmitButton").animate({
+					opacity: 0
+				},{	complete: function() {
+						tinymce.activeEditor.setContent("");
+						$('.textarea textarea').val("");
+
+						$('#seePreviewAnswer').animate({
+							opacity: 0
+						},{	complete: function() {
+								$('#afficheReponse').animate({
+									opacity: 0
+								},{	complete: function() {
+										$('#afficheReponse').empty().append(response).animate({
+											opacity: 1
+										});
+										SyntaxHighlighter.highlight();
+									}
+								})
+							}
+						})	
+					}
+				})
+			}
+		})
 	}
 }
 
@@ -172,12 +305,13 @@ affiche = {
 		_this = this;
 		_this.inputTiny = $("#tiny input");
 
-		if(!typeof widget === 'undefined') {
+		if(!(typeof widget === 'undefined')) {
 			_this.tagInput = widget.getValue().length;
+			autocomplete.disappear();
 		}
 
 		_this.titleInput = _this.inputTiny.first().val().split(" ").join("").length;
-		
+
 		if(_this.titleInput > 0 && _this.tagInput > 0)  {
 			$(".textarea, #previewSubmitButton").animate({
 				opacity: 1
@@ -186,6 +320,7 @@ affiche = {
 			$(".textarea, #previewSubmitButton").animate({
 				opacity: 0
 			})
+			
 		}
 	},
 
@@ -218,6 +353,7 @@ affiche = {
 		_this.seePreview.empty();
 
 		$("<p>").text("Visualisation de votre message").appendTo(_this.seePreview);
+
 		if(question) {
 			$("<div>").attr("id", "seeTitre").appendTo(_this.seePreview);
 			$("<div>").attr("id", "seeTags").appendTo(_this.seePreview);
@@ -232,22 +368,23 @@ affiche = {
 		
 		$("#seeDescription").html(val);
 
-		_this.seePreview.animate({
-			opacity: 1,
-			complete : function() {
+		console.log(_this.seePreview);
 
+		_this.seePreview.animate({
+			opacity: 1
+		}, { complete : function() {
 				_this.submit.animate({
 					opacity: 1
 				})
-				SyntaxHighlighter.highlight();
 			}
-		})	
+		})
+		SyntaxHighlighter.highlight();	
 	}
 }
 
 autocomplete = {
 	init: function() {
-		//setInterval(widget.blur, 5000);
+		
 	},
 
 	getValue: function(val) {
@@ -262,6 +399,10 @@ autocomplete = {
 		$("#tagsQuestion").val(texte);
 
 		return texte
+	},
+
+	disappear: function() {
+		setInterval(widget.blur, 5000);
 	}
 }
 
@@ -327,8 +468,6 @@ update = {
 						
 					}
 				})
-				//var texte = $(html).find(".errorForm").text();
-				//affiche.afficheTitreForm(texte);
 			},
 			error: function(error) {
 				affiche.afficheTitreForm("Vos données renseignées sont incorrectes");
@@ -336,50 +475,6 @@ update = {
 			}
 		})
 		
-	}
-}
-
-reponse = {
-	init: function() {
-		_this = this;
-	},
-
-	setReponse: function(e) {
-		_this = this;
-
-		$('.textarea textarea').val(tinymce.activeEditor.getContent());
-
-		$.ajax({
-			url: e.attr("action"),
-			type: e.attr("method"),
-			data: e.serialize(),
-			success: function(html) {
-				response = $(html).filter('#afficheReponse').html();
-
-				$(".textarea, #previewSubmitButton").animate({
-					opacity: 0
-				},{	complete: function() {
-						tinymce.activeEditor.setContent("");
-						$('.textarea textarea').val("");
-
-						$('#seePreviewAnswer').animate({
-							opacity: 0
-						},{	complete: function() {
-								$('#afficheReponse').animate({
-									opacity: 0
-								},{	complete: function() {
-										$('#afficheReponse').empty().append(response).animate({
-											opacity: 1
-										});
-										SyntaxHighlighter.highlight();
-									}
-								})
-							}
-						})	
-					}
-				})
-			}
-		})
 	}
 }
 
@@ -416,8 +511,6 @@ question = {
 				}
 			}
 		})
-
-		
 	}
 }
 
@@ -454,6 +547,7 @@ buzz = {
 		_this = this;
 
 		_this.shakeQuestion();
+		_this.highlight()
 	},
 
 	shakeQuestion: function() {
@@ -462,7 +556,16 @@ buzz = {
 				times : 2
 			}, 800);
 		}, 3000)
+	},
+
+	highlight: function(val) {
+		setInterval(function() {
+			$('.h3bestAnswer').effect("highlight", {
+				color: "#00b16a"
+			}, 1000)
+		}, 3000)
 	}
+
 }
 
 $(function() {

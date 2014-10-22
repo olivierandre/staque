@@ -12,6 +12,10 @@
 		showPage("presentation", "votre profil");
 	}
 
+	function afficheProfil() {
+		showPage("presentation", "voici le profil de ...");
+	}
+
 	/*
 	* 	GESTION DE LA CONNEXION ET REGISTER
 	*/
@@ -61,6 +65,14 @@
 	}
 
 	function verifVote() {
+		showPage("verif", null);
+	}
+
+	function verifBestAnswer() {
+		showPage("verif", null);
+	}
+
+	function verifComment() {
 		showPage("verif", null);
 	}
 

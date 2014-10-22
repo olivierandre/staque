@@ -3,13 +3,13 @@
 	include("presentation/top.php");
 
 	$tags = getTags();
-	$id_users = $_SESSION['id'];
+	$id_user = $_SESSION['id'];
 
 	$pseudo = $_SESSION['pseudo'];
-	$dateCreated = getDateCreated($id_users);
-	$nbQuestions = numberOfQuestionsUser($id_users);
-	$nbAnswers = 0;
-	$score = getScoreInscription($id_users) + getScoreAskQuestion($id_users);
+	$dateCreated = getDateCreated($id_user);
+	$nbQuestions = numberOfQuestionsUser($id_user);
+	$nbAnswers = getAnswersById($id_user);
+	$score = getScore($id_user);
 ?>
 
 <section id="sectionQuestion">

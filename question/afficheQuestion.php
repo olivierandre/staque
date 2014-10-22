@@ -1,7 +1,7 @@
 <?php
 
 	if($page === 'home') {
-		$recentQuestion = getRecentQuestions();
+		$recentQuestion = getRecentQuestions($pagination, $numberPerPage);
 		$opacity = "";
 	} else {
 		$recentQuestion  = getQuestion($id_question);
@@ -47,7 +47,7 @@ class="afficheRecentQuestion <?= $opacity ?>" href="index.php?page=reponse&id_qu
 
 	<div class='informationQuestion'>
 		<ul>
-			<li><?= $question['date_created'] ?></li>
+			<li><?= dateFrWithHour($question['date_created']) ?></li>
 			<li>Nombre de vues : <?= $question['view'] ?></li>
 			<li>Question posée par : <?= $pseudo ?> (<?= $pseudoScore ?>)</li>
 		</ul>

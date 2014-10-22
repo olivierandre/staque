@@ -2,7 +2,7 @@
 	function insertQuestion($id_users, $titre, $question) {
 		$dbh = connectDBH();
 		$sql = "INSERT INTO questions (id_users, titre, question, id_note, view, date_created, date_modified)
-				VALUES(:id_users, :titre, :question, :id_note, NOW(), NOW())";
+				VALUES(:id_users, :titre, :question, :id_note, :view, NOW(), NOW())";
 
 		$stmt = $dbh->prepare($sql);
 		$stmt->bindValue(":id_users", $id_users);
@@ -18,13 +18,13 @@
 		return $id;
 	}
 
-	function numberOfQuestionsUser($id_users) {
+	function numberOfQuestionsUser($id_user) {
 		$dbh = connectDBH();
 		$sql = "SELECT COUNT(*) AS count FROM questions
-				WHERE id_users = :id_users";
+				WHERE id_users = :id_user";
 
 		$stmt = $dbh->prepare($sql);
-		$stmt->bindValue(":id_users", $id_users);
+		$stmt->bindValue(":id_user", $id_user);
 
 		$stmt->execute();
 		$count = $stmt->fetchColumn();
@@ -33,13 +33,28 @@
 		return $count;
 	}
 
-	function getRecentQuestions() {
+	function getAllQuestions() {
+		$dbh = connectDBH();
+		$sql = "SELECT COUNT(*) FROM questions";
+
+		$stmt = $dbh->prepare($sql);
+		$stmt->execute();
+		$questions = $stmt->fetchColumn();
+
+		closeDBH($dbh);
+		return $questions;
+	}
+
+	function getRecentQuestions($pagination, $numberPerPage) {
 		$dbh = connectDBH();
 		$sql = "SELECT * FROM questions
 				ORDER BY date_created DESC
-				LIMIT 3";
+				LIMIT :limite, :numberPerPage";
+
 
 		$stmt = $dbh->prepare($sql);
+		$stmt->bindValue(":limite", (int)$pagination, PDO::PARAM_INT);
+		$stmt->bindValue(":numberPerPage", (int)$numberPerPage, PDO::PARAM_INT);
 		$stmt->execute();
 		$questions = $stmt->fetchAll();
 
@@ -92,6 +107,22 @@
 
 		closeDBH($dbh);
 		return $maj;
+	}
+
+	function isQuestionResolve($id_question) {
+		$dbh = connectDBH();
+		$sql = "SELECT COUNT(*) AS resolve FROM answers 
+				WHERE id_question = :id_question
+				AND resolve = TRUE";
+
+		$stmt = $dbh->prepare($sql);
+		$stmt->bindValue(":id_question", $id_question);
+
+		$stmt->execute();
+		$resolve = $stmt->fetchColumn();
+
+		closeDBH($dbh);
+		return $resolve;
 	}
 
 ?>

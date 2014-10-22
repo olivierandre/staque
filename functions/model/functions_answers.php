@@ -1,13 +1,14 @@
 <?php
 	function insertAnswer($id_user, $id_question, $answer) {
 		$dbh = connectDBH();
-		$sql = "INSERT INTO answers (id_user, id_question, answer, resolve, date_created, date_modified)
-				VALUES(:id_user, :id_question, :answer, FALSE, NOW(), NOW())";
+		$sql = "INSERT INTO answers (id_user, id_question, answer, id_note, resolve, date_created, date_modified)
+				VALUES(:id_user, :id_question, :answer, :id_note, FALSE, NOW(), NOW())";
 
 		$stmt = $dbh->prepare($sql);
 		$stmt->bindValue(':id_user', $id_user);
 		$stmt->bindValue(':id_question', $id_question);
 		$stmt->bindValue(':answer', $answer);
+		$stmt->bindValue(':id_note', ANSWER_QUESTION);
 
 		$stmt->execute();
 		$id = $dbh->lastInsertId();
@@ -21,7 +22,7 @@
 		$dbh = connectDBH();
 		$sql = "SELECT * FROM answers
 				WHERE id_question = :id_question
-				ORDER BY resolve, date_created DESC";
+				ORDER BY resolve DESC, date_created DESC";
 		// todo : ne pas oublier de prendre en compte le score avant la date de création
 
 		$stmt = $dbh->prepare($sql);
@@ -33,6 +34,39 @@
 		closeDBH($dbh);
 		
 		return $answers;
+	}
+
+	function getAnswersById($id_user) {
+		$dbh = connectDBH();
+		$sql = "SELECT COUNT(*) AS count FROM answers
+				WHERE id_user = :id_user
+				ORDER BY resolve, date_created DESC";
+
+		$stmt = $dbh->prepare($sql);
+		$stmt->bindValue(':id_user', $id_user);
+
+		$stmt->execute();
+		$count = $stmt->fetchColumn();
+		
+		closeDBH($dbh);
+		
+		return $count;
+	}
+
+	function setResolve($id_answer) {
+		$dbh = connectDBH();
+		$sql = "UPDATE answers
+				SET resolve = TRUE
+				WHERE id = :id_answer";
+
+		$stmt = $dbh->prepare($sql);
+		$stmt->bindValue(':id_answer', $id_answer);
+
+		$update = $stmt->execute();
+		
+		closeDBH($dbh);
+		
+		return $update;
 	}
 
 

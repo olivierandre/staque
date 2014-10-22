@@ -26,7 +26,7 @@
                 $moisFinal = "Juillet";
                 break;
             case "08" :
-                $moisFinal = "Aout";
+                $moisFinal = "Août";
                 break;
             case "09" :
                 $moisFinal = "Septembre";
