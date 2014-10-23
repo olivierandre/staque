@@ -49,7 +49,13 @@ class="afficheRecentQuestion <?= $opacity ?>" href="index.php?page=reponse&id_qu
 		<ul>
 			<li><?= dateFrWithHour($question['date_created']) ?></li>
 			<li>Nombre de vues : <?= $question['view'] ?></li>
-			<li>Question posée par : <?= $pseudo ?> (<?= $pseudoScore ?>)</li>
+			<li>Question posée par : 
+			<?php if($page !== 'home') : ?>
+				<a href="index.php?page=afficheProfil&user=<?= $id_users ?>"><?= $pseudo ?></a>
+			<?php else : ?>
+				<?= ucfirst($pseudo) ?>
+			<?php endif ?>
+				 (<?= $pseudoScore ?>)</li>
 		</ul>
 	</div>
 
