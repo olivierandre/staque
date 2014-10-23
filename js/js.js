@@ -330,7 +330,9 @@ reponse = {
 										$('#afficheReponse').empty().append(response).animate({
 											opacity: 1
 										});
-										click.init();
+										click.boutonCommentAffiche()
+										click.boutonAddComment()
+										click.boutonSubmitComment()
 										SyntaxHighlighter.highlight();
 									}
 								})
