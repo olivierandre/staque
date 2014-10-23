@@ -47,20 +47,22 @@
 
 		// J'ai les commentaires pour chaque réponse
 		$commentsAnswer = getComment($idAnswer);
+		$countCommentsAnswer = count($commentsAnswer);
+		$i = 1;
 
 	?>
 			<div class="boutonScore" id="boutonScore_<?= $idAnswer ?>">
 			<div id="scoreAnswer_<?= $idAnswer ?>" class="scoreAnswer"><p><?= $scoreAnswer ?></p></div>
 			<?php 
 				if(!$isVote && ($user_id_answer !== $id_user) && isLog()) {
-					$affiche = '<button href="index.php?page=verifVote&idAnswer='.$idAnswer.'&vote=pos&user_vote='.$id_user.'&userAnswer='.$user_id_answer.'" id="votePos_'.$idAnswer.'" class="votePos">+</button>';
+					$affiche = '<button href="index.php?page=verifVote&idAnswer='.$idAnswer.'&vote=pos&user_vote='.$id_user.'&userAnswer='.$user_id_answer.'&id_question='.$id_question.'" id="votePos_'.$idAnswer.'" class="votePos">+</button>';
 				} else {
 					$affiche = '<div class="votePos"><p>+</p></div>';
 				}
 					echo $affiche;
 				
 				if(!$isVote && ($user_id_answer !== $id_user) && isLog()) {
-					$affiche = '<button href="index.php?page=verifVote&idAnswer='.$idAnswer.'&vote=neg&user_vote='.$id_user.'&userAnswer='.$user_id_answer.'" id="voteNeg_'.$idAnswer.'" class="voteNeg">-</button>';
+					$affiche = '<button href="index.php?page=verifVote&idAnswer='.$idAnswer.'&vote=neg&user_vote='.$id_user.'&userAnswer='.$user_id_answer.'&id_question='.$id_question.'" id="voteNeg_'.$idAnswer.'" class="voteNeg">-</button>';
 				} else {
 					$affiche = '<div class="voteNeg"><p>-</p></div>';
 				}
@@ -86,20 +88,44 @@
 				</div>
 			<?php endif ?>
 
-				<div class="boutonComment" id="comment_<?= $idAnswer ?>">
-					<a>Ajouter un commentaire</a>
+			<?php if(isLog()) : ?>
+				<div class="boutonComment" id="boutonComment_<?= $idAnswer ?>">
+					<button>Ajouter un commentaire</button>
 				</div>
+			<?php endif ?>
+			
+			<?php if($countCommentsAnswer > 0) : ?>
 				<div class="boutonCommentAffiche" id="afficheComment_<?= $idAnswer ?>">
-					<a>Afficher les commentaires</a>
+					<button>Afficher les commentaires</button>
 				</div>
+			<?php endif; ?>
 
 				<div class="comment">
-					<form id="comment_<?= $idAnswer ?>" class="formComment" method="POST" action="index.php?page=verifComment&idAnswer=<?= $idAnswer ?>">
+				<?php if(isLog()) : ?>
+					<form id="formComment_<?= $idAnswer ?>" class="formComment" method="POST" action="index.php?page=verifComment&idAnswer=<?= $idAnswer ?>">
 						<input type="text" name="response" placeholder="Votre commentaire" >
-						<input type="submit" value="Valider votre commentaire">
+						<input type="submit" value="Valider votre commentaire" id="submit_<?= $idAnswer ?>">
 						<input type="hidden" name="id_user" value="<?= $id_user ?>">
 						<input type="hidden" name="id_question" value="<?= $id_question ?>">
 					</form>
+				<?php endif ?>
+
+					<div id="afficheCommentaire_<?= $idAnswer ?>" class="commentaireAffiche">
+			<?php foreach($commentsAnswer as $comment) :
+					if($i %2) {
+						$pair = "pair";
+					} else {
+						$pair = "impair";
+					}
+					$i++;
+			?>
+
+						<div id="commentaireAffiche_<?= $idAnswer ?>" class="afficheCommentaire <?= $pair ?>">
+							<p><?= ucfirst($comment['comment']) ?></p>
+							<span>De <?= $comment['pseudo'] ?>, posté le <?= dateFrWithHour($comment['date_created']) ?></span>
+						</div>
+			<?php endforeach; $i=1; ?>
+					</div>
 				</div>
 
 			</div>
@@ -125,8 +151,6 @@
 		<button class="answerButton button">Répondre à la question</button>
 	</div>
 
-	
-
 	<div id="divFormTiny">
 		<form id="tinyAnswer" method="post" action="index.php?page=verifAnswer">
 			
@@ -142,8 +166,8 @@
 			    <input id="submitAnswer" type="submit">
 			</div>
 		</form>
-		
 	</div>
+
 	<div id="seePreviewAnswer"></div>	
 <?php endif ?>
 

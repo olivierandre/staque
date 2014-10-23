@@ -20,10 +20,13 @@
 
 	function getAnswers($id_question) {
 		$dbh = connectDBH();
-		$sql = "SELECT * FROM answers
-				WHERE id_question = :id_question
-				ORDER BY resolve DESC, date_created DESC";
-		// todo : ne pas oublier de prendre en compte le score avant la date de création
+
+		$sql = "SELECT answers.*, SUM(tech_score.score) AS score FROM answers 
+				LEFT JOIN note_answer ON note_answer.id_answer = answers.id 
+				LEFT JOIN tech_score ON tech_score.id = note_answer.id_note
+				WHERE id_question = :id_question 
+				GROUP BY answers.id 
+				ORDER BY answers.resolve DESC, score DESC";
 
 		$stmt = $dbh->prepare($sql);
 		$stmt->bindValue(':id_question', $id_question);

@@ -20,7 +20,8 @@
 
 	function getComment($id_answer) {
 		$dbh = connectDBH();
-		$sql = "SELECT * FROM comment_answers
+		$sql = "SELECT users.pseudo, comment_answers.* FROM comment_answers 
+				JOIN users ON users.id = comment_answers.id_user 
 				WHERE id_answer = :id_answer";
 
 		$stmt = $dbh->prepare($sql);

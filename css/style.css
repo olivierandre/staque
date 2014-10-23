@@ -189,6 +189,19 @@ button {
 	background-color: rgba(197, 239, 247, .7);
 }
 
+#insertImage input[type=submit] {
+	outline: none;
+	border: 0;
+	padding: 10px 30px;
+	background-color: rgba(66, 215, 158, 0.5);
+	margin-top: 20px;
+	transition: background-color .3s;
+}
+
+#insertImage input[type=submit]:hover {
+	background-color: rgba(66, 215, 158, 1);
+}
+
 /*************************************************/
 /*
 /*
@@ -572,8 +585,23 @@ button {
 	color: white;
 	padding: 10px 20px;
 	font-weight: 700;
-	background-color: black;
-	margin-bottom:10px;
+	transition: background-color .3s;
+}
+
+.boutonScore .votePos {
+	background-color: rgba(59, 173, 57, 0.5);
+}
+
+.boutonScore .votePos:hover {
+	background-color: rgba(59, 173, 57, 1);
+}
+
+.boutonScore .voteNeg {
+	background-color: rgba(221, 51, 44, 0.5);
+}
+
+.boutonScore .voteNeg:hover {
+	background-color: rgba(221, 51, 44, 1);
 }
 
 .boutonScore div.votePos,
@@ -605,7 +633,11 @@ button {
 	margin-left: 10px;
 }
 
-.boutonComment a, .boutonCommentAffiche a {
+.boutonComment {
+	opacity: 1;
+}
+
+.boutonComment button, .boutonCommentAffiche button {
 	display: block;
 	padding: 10px 30px;
 	background-color: rgba(224, 130, 131, 0.5);
@@ -613,15 +645,15 @@ button {
 	color: black;
 }
 
-.boutonCommentAffiche a {
+.boutonCommentAffiche button {
 	background-color: rgba(175, 224, 130, 0.5);
 }
 
-.boutonCommentAffiche a:hover {
+.boutonCommentAffiche button:hover {
 	background-color: rgba(175, 224, 130, 1);
 }
 
-.boutonComment a:hover {
+.boutonComment button:hover {
 	background-color: rgba(224, 130, 131, 1);
 }
 
@@ -645,6 +677,10 @@ button {
 	clear: both;
 	width: 100%;
 	margin-top: 10px;
+}
+
+.formComment {
+	display: none;
 }
 
 .formComment input[type=text] {
@@ -674,4 +710,32 @@ button {
 
 .formComment input[type=submit]:hover {
 	background-color: rgba(113, 212, 254, 1);
+}
+
+.pair, .impair {
+	color: white;
+	margin-bottom: 10px;
+	text-align: left;
+	text-indent: 10px;
+}
+
+.pair {
+	background-color: rgba(52, 73, 94, 1);
+}
+
+.impair {
+	background-color: rgba(52, 73, 94, .5);
+}
+
+.commentaireAffiche {
+	display: none;
+}
+
+.afficheCommentaire span {
+	padding-bottom: 5px;
+	text-align: right;
+	font-size: 14px;
+	display: block;
+	font-style: italic;
+	margin-right: 20px;
 }

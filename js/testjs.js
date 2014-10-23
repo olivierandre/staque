@@ -168,7 +168,9 @@ commentaire = {
 							duration: 800,
 							complete: function() {
 								$('#afficheReponse').empty().append(response);
-								click.init();
+								click.boutonCommentAffiche();
+								click.boutonAddComment();
+								click.boutonSubmitComment();
 								SyntaxHighlighter.highlight();
 							}
 						}).show({
@@ -187,13 +189,11 @@ commentaire = {
 		var formComment = "#formComment" + idComment;
 		_this.afficheComment = '#afficheCommentaire'+ idComment;
 		_this.buttonComment = '#afficheComment' + idComment + ' button';
-		var boutonAjoutComment = '#boutonComment' + idComment + ' button';
 
 		_this.etatAfficheComment = $(_this.afficheComment).css('display');
 
 		if($(formComment).css('display') !== 'none') {
 			$(formComment).slideToggle();
-			$(boutonAjoutComment).text('Ajouter un commentaire')
 		}
 
 		if(_this.etatAfficheComment === 'none') {
@@ -209,18 +209,12 @@ commentaire = {
 		var idComment = val.substr(val.search('_'), val.length);
 		var formComment = "#formComment" + idComment;
 		var afficheComment = '#afficheCommentaire'+ idComment;
-		var boutonAjoutComment = '#boutonComment' + idComment + ' button';
-		var buttonComment = '#afficheComment' + idComment + ' button';
+		var boutonAjoutComment = '#boutonComment' + idComment;
 		
 		if($(afficheComment).css('display') !== 'none') {
-			$(buttonComment).text('Afficher les commentaires');
 			$(afficheComment).slideToggle();
 		}
-		if($(formComment).css('display') === 'none') {
-			$(boutonAjoutComment).text('Ne pas ajouter de commentaire')
-		} else {
-			$(boutonAjoutComment).text('Ajouter un commentaire')
-		}
+
 		$(formComment).slideToggle();
 		
 	}
@@ -289,8 +283,8 @@ reponse = {
 							complete: function() {
 								$('#afficheReponse').empty().append(response);
 								$("#afficheReponse h3").text("Voici la meilleure réponse !!!").addClass('h3bestAnswer');
+								//buzz.highlight($("#afficheReponse h3"));
 								SyntaxHighlighter.highlight();
-								click.init();
 							}
 						}).show({
 							effect: "slide", 
@@ -318,7 +312,6 @@ reponse = {
 					opacity: 0
 				},{	complete: function() {
 						tinymce.activeEditor.setContent("");
-
 						$('.textarea textarea').val("");
 
 						$('#seePreviewAnswer').animate({
@@ -330,7 +323,6 @@ reponse = {
 										$('#afficheReponse').empty().append(response).animate({
 											opacity: 1
 										});
-										click.init();
 										SyntaxHighlighter.highlight();
 									}
 								})
@@ -354,26 +346,13 @@ vote = {
 
 		$.ajax({
 			url: url,
-			success: function(html) {
-				
-				response = $(html).filter('#afficheReponse').html();
-
-				$('#afficheReponse').hide({
-							effect: "slide", 
-							direction : "right" , 
-							easing: 'easeInExpo',
-							duration: 800,
-							complete: function() {
-								$('#afficheReponse').empty().append(response);
-								SyntaxHighlighter.highlight();
-								click.init();
-							}
-						}).show({
-							effect: "slide", 
-							direction : "left" , 
-							easing: 'easeOutExpo',
-							duration: 800,
-						})
+			success: function(data) {
+				console.log(data);
+				$(scoreAnswer).fadeOut({
+				complete: function() {
+						$(scoreAnswer).text(data).fadeIn()
+					}
+				})
 			}
 		})
 	},
@@ -392,12 +371,14 @@ affiche = {
 	init: function() {
 		_this = this;
 		_this.errorForm = $('#titreForm h1');
+
 	},
 
 	cacheButtonAnswer: function(idCache) {
 		_this = this;
 
 		idCache = '#boutonScore' + idCache + ' button';
+		console.log(idCache);
 
 		$(idCache).animate({
 				opacity: 0
@@ -480,6 +461,8 @@ affiche = {
 		}
 		
 		$("#seeDescription").html(val);
+
+		console.log(_this.seePreview);
 
 		_this.seePreview.animate({
 			opacity: 1
@@ -572,9 +555,10 @@ update = {
 						$('body').empty().append(html).fadeIn({
 							duration: 1500,
 							complete: function() {
+								//location.href = location.origin + location.pathname;
+								//window.location.assign(location.origin + location.pathname);
 								window.history.pushState("", "", location.origin + location.pathname);
 								document.title = "Staque";
-
 							}
 						});
 						

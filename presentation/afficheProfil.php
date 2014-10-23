@@ -24,20 +24,26 @@
 	$dateCreated = $userProfil['date_created'];
 	$country = getCountryViaId($userProfil['id_country']);
 	$web = $userProfil['web'];
-	
 
+	$filename = "default-user.png";
+
+	if(!empty($userProfil['lien_photo'])) {
+		$filename = $userProfil['lien_photo'];
+	}
+
+	
 ?>
 <div id="afficheProfil">
 	<p>Nom complet : <?= $userProfil['firstname'].' '.$userProfil['lastname'] ?></p>
 	<p>Birthday : <?= dateFr($userProfil['birthday']) ?></p>
 	<p>Country : <?= $country ?></p>
 	<p>Job : <?= $userProfil['job'] ?></p>
-	<p><a href="http://<?= $web ?>"><?= $web ?></a></p>
+	<p>Site web : <a href="http://<?= $web ?>"><?= $web ?></a></p>
 </div>
 
 <div id="infoProfil">
 	<div class="imgProfil100">
-		<img src="img/figure100/11102014_6044.jpg">
+		<img src="img/figure/<?= $filename ?>">
 		<p class="pseudo"><?= $pseudo ?></p>
 		<p class="pseudoScore"><?= $score ?></p>
 		<p class='infoProfil'>Inscrit le <?= dateFr($dateCreated) ?></p>

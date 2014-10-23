@@ -18,6 +18,35 @@
 		return $lastId;
 	}
 
+	function insertImage($id, $filename) {
+		$dbh = connectDBH();
+		$sql = "UPDATE users
+				SET lien_photo = :filename
+				WHERE id = :id";
+
+		$stmt = $dbh->prepare($sql);
+		$stmt->bindValue(":filename", $filename);
+		$stmt->bindValue(":id", $id);
+
+		$count = $stmt->execute();
+
+		return $count;
+	}
+
+	function getImage($id) {
+		$dbh = connectDBH();
+		$sql = "SELECT lien_photo FROM users
+				WHERE id = :id";
+
+		$stmt = $dbh->prepare($sql);
+		$stmt->bindValue(":id", $id);
+
+		$stmt->execute();
+		$filename = $stmt->fetchColumn();
+
+		return $filename;
+	}
+
 	function updateProfilUser($id, $pseudo, $firstname, $lastname, $email, $birthday, $id_country, $job, $web) {
 		$dbh = connectDBH();
 		$sql = "UPDATE users 

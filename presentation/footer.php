@@ -45,7 +45,7 @@
         	var tags = [<?php 
                 if(!empty($tags)) :
                     foreach($tags as $tag) : ?>
-                '<?= $tag['name']?>',
+                '<?= strtoupper($tag['name']) ?>',
                     <?php endforeach; endif; ?>]
         	var widget = new AutoComplete("search_bar", tags);
         </script>

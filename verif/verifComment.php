@@ -16,8 +16,6 @@
 
 		header("Location: http://localhost/staque/index.php?page=reponse&id_question=$id_question");
 		die();
-		
-
 	} 
 	
 	header(PAGE_ACCUEIL);

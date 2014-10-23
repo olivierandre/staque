@@ -76,6 +76,10 @@
 		showPage("verif", null);
 	}
 
+	function verifImage() {
+		showPage("verif", null);
+	}
+
 	/*
 	*	Gestion des questions/réponses
 	*/  
