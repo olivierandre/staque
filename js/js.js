@@ -8,8 +8,16 @@ app = {
 		buzz.init();
 		tiny.init();
 		affiche.init();	
+		commentaire.init();
 	}
 }
+
+/*
+*
+*		Initialisation des click
+*
+*
+*/
 
 click = {
 	init: function() {
@@ -146,6 +154,13 @@ click = {
 	}
 }
 
+/*
+*
+*		Gestion des commentaires
+*
+*
+*/
+
 commentaire = {
 	init: function() {
 		_this = this;
@@ -170,13 +185,14 @@ commentaire = {
 								$('#afficheReponse').empty().append(response);
 								click.init();
 								SyntaxHighlighter.highlight();
+								commentaire.init();
 							}
 						}).show({
 							effect: "slide", 
 							direction : 'right', 
 							easing: 'easeOutExpo',
 							duration: 800,
-						})
+						})	
 			}
 		})
 	},
@@ -199,7 +215,7 @@ commentaire = {
 		if(_this.etatAfficheComment === 'none') {
 			$(_this.buttonComment).text('Cacher les commentaires');
 		} else {
-			$(_this.buttonComment).text('Afficher les commentaires');
+			$(_this.buttonComment).text(_this.nomBouton);
 		}
 
 		$(_this.afficheComment).slideToggle();
@@ -213,7 +229,7 @@ commentaire = {
 		var buttonComment = '#afficheComment' + idComment + ' button';
 		
 		if($(afficheComment).css('display') !== 'none') {
-			$(buttonComment).text('Afficher les commentaires');
+			$(buttonComment).text(_this.nomBouton);
 			$(afficheComment).slideToggle();
 		}
 		if($(formComment).css('display') === 'none') {
@@ -225,6 +241,13 @@ commentaire = {
 		
 	}
 }
+
+/*
+*
+*		Gestion de la pagination
+*
+*
+*/
 
 pagination = {
 	init: function() {
@@ -266,6 +289,13 @@ pagination = {
 		})
 	}
 }
+
+/*
+*
+*		Gestion de la réponse
+*
+*
+*/
 
 reponse = {
 	init: function() {
@@ -344,6 +374,13 @@ reponse = {
 	}
 }
 
+/*
+*
+*		Gestion des votes
+*
+*
+*/
+
 vote = {
 	init: function() {
 		_this = this;
@@ -388,6 +425,13 @@ vote = {
 	}
 
 }
+
+/*
+*
+*		Gestion de l'affichage de bouton, textarea ...
+*
+*
+*/
 
 affiche = {
 	init: function() {
@@ -494,6 +538,13 @@ affiche = {
 	}
 }
 
+/*
+*
+*		Gestion du modules autocomplete.js
+*
+*
+*/
+
 autocomplete = {
 	init: function() {
 		
@@ -514,9 +565,16 @@ autocomplete = {
 	},
 
 	disappear: function() {
-		setInterval(widget.blur, 5000);
+		//setInterval(widget.blur, 5000);
 	}
 }
+
+/*
+*
+*		tinymce
+*
+*
+*/
 
 tiny = {
 	init: function() {
@@ -537,6 +595,13 @@ tiny = {
 	}
 }
 
+/*
+*
+*		Gestion des MAJ SQL en AJAX
+*
+*
+*/
+
 update = {
 	init: function() {
 		_this = this;
@@ -554,6 +619,7 @@ update = {
 				var form = $(html).find("#formProfil");
 				$("#formulaireLog").empty().append(form);
 				click.clickUpdateProfil();
+				date.init();
 			}
 		})
 	},
@@ -591,6 +657,13 @@ update = {
 	}
 }
 
+/*
+*
+*		Gestion des questions SQL en AJAX
+*
+*
+*/
+
 question = {
 	init: function() {
 		_this = this;
@@ -627,6 +700,13 @@ question = {
 	}
 }
 
+/*
+*
+*		Gestion des dates
+*
+*
+*/
+
 date = {
 	init: function() {
 		_this = this;
@@ -655,6 +735,13 @@ date = {
 	}
 }
 
+/*
+*
+*		Gestion des animations jQueryUI
+*
+*
+*/
+
 buzz = {
 	init: function() {
 		_this = this;
@@ -680,6 +767,13 @@ buzz = {
 	}
 
 }
+
+/*
+*
+*		Démarrage JS
+*
+*
+*/
 
 $(function() {
 	app.init();

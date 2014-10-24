@@ -84,7 +84,7 @@
 
 			<?php if(isLog() && $count && !$isResolve) : ?>
 				<div class="boutonBestAnswer" id="bestAnswer_<?= $idAnswer ?>">
-					<a href="index.php?page=verifBestAnswer&idAnswer=<?= $idAnswer ?>&user_vote=<?= $id_user ?>&id_question=<?= $id_question ?>">Meilleure réponse</a>
+					<a href="index.php?page=verifBestAnswer&idAnswer=<?= $idAnswer ?>&user_vote=<?= $id_user ?>&userAnswer=<?= $user_id_answer ?>&id_question=<?= $id_question ?>">Meilleure réponse</a>
 				</div>
 			<?php endif ?>
 
@@ -96,7 +96,7 @@
 			
 			<?php if($countCommentsAnswer > 0) : ?>
 				<div class="boutonCommentAffiche" id="afficheComment_<?= $idAnswer ?>">
-					<button>Afficher les commentaires</button>
+					<button>Afficher les commentaires (<?= $countCommentsAnswer ?>)</button>
 				</div>
 			<?php endif; ?>
 
@@ -120,9 +120,9 @@
 					$i++;
 			?>
 
-						<div id="commentaireAffiche_<?= $idAnswer ?>" class="afficheCommentaire <?= $pair ?>">
+						<div id="getAnswersByQuestoin($id_question)<?= $idAnswer ?>" class="afficheCommentaire <?= $pair ?>">
 							<p><?= ucfirst($comment['comment']) ?></p>
-							<span>De <?= $comment['pseudo'] ?>, posté le <?= dateFrWithHour($comment['date_created']) ?></span>
+							<span>De <a href="index.php?page=afficheProfil&user=<?= $comment['id_user'] ?>"><?= $comment['pseudo'] ?></a>, posté le <?= dateFrWithHour($comment['date_created']) ?></span>
 						</div>
 			<?php endforeach; $i=1; ?>
 					</div>

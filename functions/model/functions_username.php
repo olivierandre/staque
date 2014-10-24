@@ -47,14 +47,13 @@
 		return $filename;
 	}
 
-	function updateProfilUser($id, $pseudo, $firstname, $lastname, $email, $birthday, $id_country, $job, $web) {
+	function updateProfilUser($id, $pseudo, $firstname, $lastname, $email, $id_country, $job, $web) {
 		$dbh = connectDBH();
 		$sql = "UPDATE users 
 				SET pseudo = :pseudo,
 					firstname = :firstname,
 					lastname = :lastname,
 					email = :email,
-					birthday = :birthday,
 					id_country = :id_country,
 					job = :job,
 					web = :web,
@@ -67,7 +66,7 @@
 		$stmt->bindValue(":firstname", $firstname);
 		$stmt->bindValue(":lastname", $lastname);
 		$stmt->bindValue(":email", $email);
-		$stmt->bindValue(":birthday", $birthday);
+		//$stmt->bindValue(":birthday", $birthday);
 		$stmt->bindValue(":id_country", $id_country);
 		$stmt->bindValue(":job", $job);
 		$stmt->bindValue(":web", $web);

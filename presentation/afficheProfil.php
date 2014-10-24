@@ -35,7 +35,7 @@
 ?>
 <div id="afficheProfil">
 	<p>Nom complet : <?= $userProfil['firstname'].' '.$userProfil['lastname'] ?></p>
-	<p>Birthday : <?= dateFr($userProfil['birthday']) ?></p>
+	<!-- <p>Birthday : <?= dateFr($userProfil['birthday']) ?></p> -->
 	<p>Country : <?= $country ?></p>
 	<p>Job : <?= $userProfil['job'] ?></p>
 	<p>Site web : <a href="http://<?= $web ?>"><?= $web ?></a></p>

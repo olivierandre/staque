@@ -77,6 +77,21 @@
 		return $question;
 	}
 
+	function getAnswersByQuestion($id_question) {
+		$dbh = connectDBH();
+		$sql = "SELECT count(*) AS number FROM answers
+				WHERE id_question = :id_question";
+
+		$stmt = $dbh->prepare($sql);
+		$stmt->bindValue(":id_question", $id_question);
+
+		$stmt->execute();
+		$number = $stmt->fetchColumn();
+
+		closeDBH($dbh);
+		return $number;
+	}
+
 	function getUserQuestion($id_question, $id_user) {
 		$dbh = connectDBH();
 		$sql = "SELECT COUNT(*) AS find FROM questions

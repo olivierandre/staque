@@ -85,7 +85,7 @@
 		<p class='infoProfil'>A répondu à <?= $nbAnswers ?> question(s)<p>
 	</div>
 	<form id="insertImage" method="POST" enctype="multipart/form-data" action="index.php?page=verifImage">
-		<label for="filename">Lien vers votre image de profil</label>
+		<label for="filename">Lien vers votre image de profil</label><br>
 		<input type="file" id="filename" name="filename">
 		<input type="hidden" name="id" value="<?= $id ?>">
 		<input type="hidden" name="pseudo" value="<?= $pseudo ?>"><br>
@@ -110,8 +110,8 @@
 		<label for="email">Email</label>
 		<input type="text" id="email" name="email" value="<?= $profil['email'] ?>">
 
-		<label for="birthday">Date de naissance</label>
-		<input type="text" id="birthday" name="birthday" value="<?= $birthday ?>">
+		<!-- <label for="birthday">Date de naissance</label>
+		<input type="text" id="birthday" name="birthday" value="<?= $birthday ?>"> -->
 
 		<label for="country">Country</label>
 			<select name="id_country" id="country">

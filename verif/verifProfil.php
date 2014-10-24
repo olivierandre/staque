@@ -8,7 +8,7 @@
 		$firstname = strip_tags($_POST['firstname']);
 		$lastname = strip_tags($_POST['lastname']);
 		$email = strtolower(strip_tags($_POST['email']));
-		$birthday = date('Y-m-d H:i:s', strtotime(strip_tags(str_replace('/', '-', $_POST['birthday']))));
+		//$birthday = date('Y-m-d H:i:s', strtotime(strip_tags(str_replace('/', '-', $_POST['birthday']))));
 		$id_country = strip_tags($_POST['id_country']);
 		$job = strip_tags($_POST['job']);
 		$web = strip_tags($_POST['web']);
@@ -27,7 +27,7 @@
 		} else {
 
 			// MAJ du profil
-			$updateProfil = updateProfilUser($id, $pseudo, $firstname, $lastname, $email, $birthday, $id_country, $job, $web);
+			$updateProfil = updateProfilUser($id, $pseudo, $firstname, $lastname, $email, $id_country, $job, $web);
 		} 
 
 		if($updateProfil) {

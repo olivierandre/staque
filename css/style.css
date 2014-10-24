@@ -189,6 +189,14 @@ button {
 	background-color: rgba(197, 239, 247, .7);
 }
 
+#insertImage {
+	margin-top: 20px;
+}
+
+#insertImage input[type=file] {
+	margin-top: 20px;
+}
+
 #insertImage input[type=submit] {
 	outline: none;
 	border: 0;
@@ -729,6 +737,10 @@ button {
 
 .commentaireAffiche {
 	display: none;
+}
+
+.afficheCommentaire a {
+	color: white;
 }
 
 .afficheCommentaire span {
