@@ -12,6 +12,13 @@ app = {
 	}
 }
 
+/*
+*
+*		Initialisation des click
+*
+*
+*/
+
 click = {
 	init: function() {
 		_this = this;
@@ -147,6 +154,13 @@ click = {
 	}
 }
 
+/*
+*
+*		Gestion des commentaires
+*
+*
+*/
+
 commentaire = {
 	init: function() {
 		_this = this;
@@ -228,6 +242,13 @@ commentaire = {
 	}
 }
 
+/*
+*
+*		Gestion de la pagination
+*
+*
+*/
+
 pagination = {
 	init: function() {
 		_this = this;
@@ -268,6 +289,13 @@ pagination = {
 		})
 	}
 }
+
+/*
+*
+*		Gestion de la réponse
+*
+*
+*/
 
 reponse = {
 	init: function() {
@@ -347,6 +375,13 @@ reponse = {
 	}
 }
 
+/*
+*
+*		Gestion des votes
+*
+*
+*/
+
 vote = {
 	init: function() {
 		_this = this;
@@ -391,6 +426,13 @@ vote = {
 	}
 
 }
+
+/*
+*
+*		Gestion de l'affichage de bouton, textarea ...
+*
+*
+*/
 
 affiche = {
 	init: function() {
@@ -497,6 +539,13 @@ affiche = {
 	}
 }
 
+/*
+*
+*		Gestion du modules autocomplete.js
+*
+*
+*/
+
 autocomplete = {
 	init: function() {
 		
@@ -521,6 +570,13 @@ autocomplete = {
 	}
 }
 
+/*
+*
+*		tinymce
+*
+*
+*/
+
 tiny = {
 	init: function() {
 
@@ -539,6 +595,13 @@ tiny = {
 		}
 	}
 }
+
+/*
+*
+*		Gestion des MAJ SQL en AJAX
+*
+*
+*/
 
 update = {
 	init: function() {
@@ -595,6 +658,13 @@ update = {
 	}
 }
 
+/*
+*
+*		Gestion des questions SQL en AJAX
+*
+*
+*/
+
 question = {
 	init: function() {
 		_this = this;
@@ -631,6 +701,13 @@ question = {
 	}
 }
 
+/*
+*
+*		Gestion des dates
+*
+*
+*/
+
 date = {
 	init: function() {
 		_this = this;
@@ -659,6 +736,13 @@ date = {
 	}
 }
 
+/*
+*
+*		Gestion des animations jQueryUI
+*
+*
+*/
+
 buzz = {
 	init: function() {
 		_this = this;
@@ -684,6 +768,13 @@ buzz = {
 	}
 
 }
+
+/*
+*
+*		Démarrage JS
+*
+*
+*/
 
 $(function() {
 	app.init();
