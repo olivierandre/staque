@@ -34,7 +34,7 @@
 
 	function getScoreAskQuestion($id_user) {
 		$dbh = connectDBH();
-		$sql = "SELECT SUM(tech_score.score) AS score FROM tech_score 
+		$sql = "SELECT IFNULL(SUM(tech_score.score), 0) AS score FROM tech_score 
 				LEFT JOIN questions ON questions.id_note = tech_score.id 
 				WHERE questions.id_users = :id_user";
 
@@ -50,10 +50,14 @@
 
 	function getScoreAnswerById($id_user) {
 		$dbh = connectDBH();
-		$sql = "SELECT IFNULL(SUM(tech_score.score), 0) AS score FROM answers 
+		/*$sql = "SELECT IFNULL(SUM(tech_score.score), 0) AS score FROM answers 
 				JOIN note_answer ON note_answer.id_answer = answers.id 
 				JOIN tech_score ON tech_score.id = note_answer.id_note 
-				WHERE answers.id_user = :id_user";
+				WHERE answers.id_user = :id_user";*/
+
+		$sql = "SELECT IFNULL(SUM(tech_score.score), 0) AS score FROM note_answer 
+				JOIN tech_score ON tech_score.id = note_answer.id_note 
+				WHERE note_answer.id_user = :id_user";
 
 		$stmt = $dbh->prepare($sql);
 		$stmt->bindValue(":id_user", $id_user);
@@ -67,7 +71,7 @@
 
 	function getScoreForAAnswer($id_user) {
 		$dbh = connectDBH();
-		$sql = "SELECT SUM(tech_score.score) as score FROM tech_score 
+		$sql = "SELECT IFNULL(SUM(tech_score.score), 0) as score FROM tech_score 
 				LEFT JOIN answers ON answers.id_note = tech_score.id 
 				WHERE answers.id_user = :id_user";
 

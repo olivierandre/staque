@@ -31,5 +31,5 @@
 			<input type="submit" value="Se connecter !">
 
 		</form>
-		<a class="lost" href="index.php?page=lost">Mot de passe perdu ?</a>
+		<!-- <a class="lost" href="index.php?page=lost">Mot de passe perdu ?</a> -->
 	</div>

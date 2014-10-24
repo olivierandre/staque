@@ -3,8 +3,8 @@
     //paramètres de connexion en constantes
     define("DBHOST", "localhost");  //soit localhost, soit l'IP du serveur
     define("DBUSER", "root");       //utilisateur de la base (différent de PHPmyAdmin)
-    define("DBPASS", "root");           //mot de passe
-    define("DBNAME", "staque");  //nom de la base de données
+    define("DBPASS", "");           //mot de passe
+    define("DBNAME", "staque_prod");  //nom de la base de données
     
     function connectDBH() {
     	try {

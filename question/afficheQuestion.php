@@ -23,6 +23,9 @@
 
 	$pseudo = getUserProfil($id_users)['pseudo'];
 	$pseudoScore = getScore($id_users);
+
+	$numberAnswer = getAnswersByQuestion($id_question);
+
 	if($page === "home") :	
 ?>
 <a <?php else :?>
@@ -48,6 +51,7 @@ class="afficheRecentQuestion <?= $opacity ?>" href="index.php?page=reponse&id_qu
 	<div class='informationQuestion'>
 		<ul>
 			<li><?= dateFrWithHour($question['date_created']) ?></li>
+			<li>Nombre de réponses apportées : <?= $numberAnswer ?></li>
 			<li>Nombre de vues : <?= $question['view'] ?></li>
 			<li>Question posée par : 
 			<?php if($page !== 'home') : ?>

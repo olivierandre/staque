@@ -8,6 +8,7 @@ app = {
 		buzz.init();
 		tiny.init();
 		affiche.init();	
+		commentaire.init();
 	}
 }
 
@@ -170,13 +171,14 @@ commentaire = {
 								$('#afficheReponse').empty().append(response);
 								click.init();
 								SyntaxHighlighter.highlight();
+								commentaire.init();
 							}
 						}).show({
 							effect: "slide", 
 							direction : 'right', 
 							easing: 'easeOutExpo',
 							duration: 800,
-						})
+						})	
 			}
 		})
 	},
@@ -199,7 +201,7 @@ commentaire = {
 		if(_this.etatAfficheComment === 'none') {
 			$(_this.buttonComment).text('Cacher les commentaires');
 		} else {
-			$(_this.buttonComment).text('Afficher les commentaires');
+			$(_this.buttonComment).text(_this.nomBouton);
 		}
 
 		$(_this.afficheComment).slideToggle();
@@ -213,7 +215,7 @@ commentaire = {
 		var buttonComment = '#afficheComment' + idComment + ' button';
 		
 		if($(afficheComment).css('display') !== 'none') {
-			$(buttonComment).text('Afficher les commentaires');
+			$(buttonComment).text(_this.nomBouton);
 			$(afficheComment).slideToggle();
 		}
 		if($(formComment).css('display') === 'none') {
@@ -515,7 +517,7 @@ autocomplete = {
 	},
 
 	disappear: function() {
-		setInterval(widget.blur, 5000);
+		//setInterval(widget.blur, 5000);
 	}
 }
 
@@ -555,6 +557,7 @@ update = {
 				var form = $(html).find("#formProfil");
 				$("#formulaireLog").empty().append(form);
 				click.clickUpdateProfil();
+				date.init();
 			}
 		})
 	},
