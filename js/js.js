@@ -318,7 +318,6 @@ reponse = {
 					opacity: 0
 				},{	complete: function() {
 						tinymce.activeEditor.setContent("");
-
 						$('.textarea textarea').val("");
 
 						$('#seePreviewAnswer').animate({
@@ -329,7 +328,7 @@ reponse = {
 								},{	complete: function() {
 										$('#afficheReponse').empty().append(response).animate({
 											opacity: 1
-										});
+										})
 										click.boutonCommentAffiche()
 										click.boutonAddComment()
 										click.boutonSubmitComment()
